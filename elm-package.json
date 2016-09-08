@@ -1,7 +1,7 @@
 {
     "version": "1.0.0",
     "summary": "A toy GUI",
-    "repository": "https://github.com/kosmoskatten/elm-playground.git",
+    "repository": "https://github.com/kosmoskatten/cui.git",
     "license": "MIT",
     "source-directories": [
         "src"
