@@ -10,3 +10,4 @@ type Equipment
 
 type Msg
   = SetLivePanel Equipment
+  | OpenNewMmeForm

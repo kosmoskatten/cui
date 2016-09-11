@@ -7900,21 +7900,29 @@ var _elm_lang$html$Html_Events$Options = F2(
 var _kosmoskatten$cui$Types$MME = {ctor: 'MME'};
 var _kosmoskatten$cui$Types$ENB = {ctor: 'ENB'};
 var _kosmoskatten$cui$Types$UE = {ctor: 'UE'};
+var _kosmoskatten$cui$Types$OpenNewMmeForm = {ctor: 'OpenNewMmeForm'};
 var _kosmoskatten$cui$Types$SetLivePanel = function (a) {
 	return {ctor: 'SetLivePanel', _0: a};
 };
 
+var _kosmoskatten$cui$MmePanel$openNewMmeForm = function (model) {
+	return _elm_lang$core$Native_Utils.update(
+		model,
+		{newMmeFormOpen: true});
+};
+var _kosmoskatten$cui$MmePanel$newMmeForm = function (model) {
+	return A2(
+		_elm_lang$html$Html$tr,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[]));
+};
 var _kosmoskatten$cui$MmePanel$addNewMme = function (model) {
 	return A2(
 		_elm_lang$html$Html$tr,
 		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$style(
-				_elm_lang$core$Native_List.fromArray(
-					[
-						{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
-					]))
-			]),
+			[]),
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(
@@ -7927,7 +7935,13 @@ var _kosmoskatten$cui$MmePanel$addNewMme = function (model) {
 						_elm_lang$html$Html$i,
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_elm_lang$html$Html_Attributes$class('material-icons w3-padding-tiny')
+								_elm_lang$html$Html_Attributes$class('material-icons w3-padding-tiny'),
+								_elm_lang$html$Html_Attributes$style(
+								_elm_lang$core$Native_List.fromArray(
+									[
+										{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
+									])),
+								_elm_lang$html$Html_Events$onClick(_kosmoskatten$cui$Types$OpenNewMmeForm)
 							]),
 						_elm_lang$core$Native_List.fromArray(
 							[
@@ -7944,6 +7958,9 @@ var _kosmoskatten$cui$MmePanel$addNewMme = function (model) {
 					]))
 			]));
 };
+var _kosmoskatten$cui$MmePanel$mmeListTopRow = function (model) {
+	return model.newMmeFormOpen ? _kosmoskatten$cui$MmePanel$newMmeForm(model) : _kosmoskatten$cui$MmePanel$addNewMme(model);
+};
 var _kosmoskatten$cui$MmePanel$viewMmeList = function (model) {
 	return A2(
 		_elm_lang$html$Html$table,
@@ -7953,7 +7970,7 @@ var _kosmoskatten$cui$MmePanel$viewMmeList = function (model) {
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_kosmoskatten$cui$MmePanel$addNewMme(model)
+				_kosmoskatten$cui$MmePanel$mmeListTopRow(model)
 			]));
 };
 var _kosmoskatten$cui$MmePanel$viewMmePanel = function (model) {
@@ -7976,9 +7993,9 @@ var _kosmoskatten$cui$MmePanel$viewMmePanel = function (model) {
 				_kosmoskatten$cui$MmePanel$viewMmeList(model)
 			]));
 };
-var _kosmoskatten$cui$MmePanel$initMme = {isAddingNewMme: false};
+var _kosmoskatten$cui$MmePanel$initMme = {newMmeFormOpen: false};
 var _kosmoskatten$cui$MmePanel$MmeModel = function (a) {
-	return {isAddingNewMme: a};
+	return {newMmeFormOpen: a};
 };
 
 var _kosmoskatten$cui$CsimControlApp$subscriptions = function (model) {
@@ -7987,13 +8004,25 @@ var _kosmoskatten$cui$CsimControlApp$subscriptions = function (model) {
 var _kosmoskatten$cui$CsimControlApp$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
-		return {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$Native_Utils.update(
-				model,
-				{livePanel: _p0._0}),
-			_1: _elm_lang$core$Platform_Cmd$none
-		};
+		if (_p0.ctor === 'SetLivePanel') {
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{livePanel: _p0._0}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		} else {
+			return {
+				ctor: '_Tuple2',
+				_0: _elm_lang$core$Native_Utils.update(
+					model,
+					{
+						mmeModel: _kosmoskatten$cui$MmePanel$openNewMmeForm(model.mmeModel)
+					}),
+				_1: _elm_lang$core$Platform_Cmd$none
+			};
+		}
 	});
 var _kosmoskatten$cui$CsimControlApp$viewEnbPanel = function (model) {
 	return A2(

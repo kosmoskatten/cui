@@ -94,5 +94,8 @@ update msg model =
     SetLivePanel newEquipment ->
       ({model | livePanel = newEquipment}, Cmd.none)
 
+    OpenNewMmeForm            ->
+      ({model | mmeModel = openNewMmeForm model.mmeModel}, Cmd.none)
+
 subscriptions : Model -> Sub Msg
 subscriptions model = Sub.none
