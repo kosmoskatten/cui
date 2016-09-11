@@ -7803,91 +7803,86 @@ var _kosmoskatten$cui$CsimControlBoard$update = F2(
 	function (msg, model) {
 		return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 	});
-var _kosmoskatten$cui$CsimControlBoard$viewMmePanel = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('w3-third')
-			]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$class('w3-container w3-orange w3-padding-16')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						A2(
-						_elm_lang$html$Html$h4,
-						_elm_lang$core$Native_List.fromArray(
-							[]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text(model.foo)
-							]))
-					]))
-			]));
-};
-var _kosmoskatten$cui$CsimControlBoard$viewEnbPanel = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('w3-third')
-			]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$class('w3-container w3-teal w3-padding-16')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						A2(
-						_elm_lang$html$Html$h4,
-						_elm_lang$core$Native_List.fromArray(
-							[]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text(model.foo)
-							]))
-					]))
-			]));
-};
-var _kosmoskatten$cui$CsimControlBoard$viewUePanel = function (model) {
-	return A2(
-		_elm_lang$html$Html$div,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('w3-third')
-			]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				A2(
-				_elm_lang$html$Html$div,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$class('w3-container w3-blue w3-padding-16')
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						A2(
-						_elm_lang$html$Html$h4,
-						_elm_lang$core$Native_List.fromArray(
-							[]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text(model.foo)
-							]))
-					]))
-			]));
-};
-var _kosmoskatten$cui$CsimControlBoard$viewTopPanels = function (model) {
+var _kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel = F4(
+	function (color, icon, count, label) {
+		return A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('w3-third')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$div,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class(
+							A2(_elm_lang$core$Basics_ops['++'], 'w3-container w3-padding-16 ', color))
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('w3-left')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(
+									_elm_lang$html$Html$i,
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html_Attributes$class('material-icons'),
+											_elm_lang$html$Html_Attributes$style(
+											_elm_lang$core$Native_List.fromArray(
+												[
+													{ctor: '_Tuple2', _0: 'font-size', _1: '36px'}
+												]))
+										]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text(icon)
+										]))
+								])),
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('w3-right')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									A2(
+									_elm_lang$html$Html$h3,
+									_elm_lang$core$Native_List.fromArray(
+										[]),
+									_elm_lang$core$Native_List.fromArray(
+										[
+											_elm_lang$html$Html$text(count)
+										]))
+								])),
+							A2(
+							_elm_lang$html$Html$div,
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html_Attributes$class('w3-clear')
+								]),
+							_elm_lang$core$Native_List.fromArray(
+								[])),
+							A2(
+							_elm_lang$html$Html$h4,
+							_elm_lang$core$Native_List.fromArray(
+								[]),
+							_elm_lang$core$Native_List.fromArray(
+								[
+									_elm_lang$html$Html$text(label)
+								]))
+						]))
+				]));
+	});
+var _kosmoskatten$cui$CsimControlBoard$viewEquipmentPanels = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -7896,9 +7891,9 @@ var _kosmoskatten$cui$CsimControlBoard$viewTopPanels = function (model) {
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_kosmoskatten$cui$CsimControlBoard$viewUePanel(model),
-				_kosmoskatten$cui$CsimControlBoard$viewEnbPanel(model),
-				_kosmoskatten$cui$CsimControlBoard$viewMmePanel(model)
+				A4(_kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel, 'w3-blue', 'phone_iphone', '0', 'UEs'),
+				A4(_kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel, 'w3-teal', 'router', '0', 'ENBs'),
+				A4(_kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel, 'w3-red', 'gamepad', '0', 'MMEs')
 			]));
 };
 var _kosmoskatten$cui$CsimControlBoard$view = function (model) {
@@ -7915,7 +7910,7 @@ var _kosmoskatten$cui$CsimControlBoard$view = function (model) {
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_kosmoskatten$cui$CsimControlBoard$viewTopPanels(model)
+				_kosmoskatten$cui$CsimControlBoard$viewEquipmentPanels(model)
 			]));
 };
 var _kosmoskatten$cui$CsimControlBoard$init = {

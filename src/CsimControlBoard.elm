@@ -26,37 +26,29 @@ view model =
   div [ A.class "w3-container"
       , A.style [("padding-top", "20px")]
       ]
-    [ viewTopPanels model ]
+    [ viewEquipmentPanels model ]
 
-viewTopPanels : Model -> Html Msg
-viewTopPanels model =
+viewEquipmentPanels : Model -> Html Msg
+viewEquipmentPanels model =
   div [ A.class "w3-row-padding w3-margin-bottom" ]
-      [ viewUePanel model
-      , viewEnbPanel model
-      , viewMmePanel model
+      [ viewEquipmentPanel "w3-blue" "phone_iphone" "0" "UEs"
+      , viewEquipmentPanel "w3-teal" "router" "0" "ENBs"
+      , viewEquipmentPanel "w3-red" "gamepad" "0" "MMEs"
       ]
 
-viewUePanel : Model -> Html Msg
-viewUePanel model =
+viewEquipmentPanel : String -> String -> String -> String -> Html Msg
+viewEquipmentPanel color icon count label =
   div [ A.class "w3-third" ]
-    [ div [ A.class "w3-container w3-blue w3-padding-16" ]
-        [ h4 [] [ text model.foo ]
-        ]
-    ]
-
-viewEnbPanel : Model -> Html Msg
-viewEnbPanel model =
-  div [ A.class "w3-third" ]
-    [ div [ A.class "w3-container w3-teal w3-padding-16" ]
-        [ h4 [] [ text model.foo ]
-        ]
-    ]
-
-viewMmePanel : Model -> Html Msg
-viewMmePanel model =
-  div [ A.class "w3-third" ]
-    [ div [ A.class "w3-container w3-orange w3-padding-16" ]
-        [ h4 [] [ text model.foo ]
+    [ div [ A.class ("w3-container w3-padding-16 " ++ color) ]
+        [ div [ A.class "w3-left" ]
+            [ i [ A.class "material-icons", A.style [("font-size", "36px")]]
+                [text icon]
+            ]
+        , div [ A.class "w3-right" ]
+            [ h3 [] [text count]
+            ]
+        , div [ A.class "w3-clear" ] []
+        , h4 [] [ text label ]
         ]
     ]
 
