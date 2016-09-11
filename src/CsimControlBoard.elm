@@ -10,14 +10,19 @@ import Html.Attributes as A
 
 -- | Model
 type alias Model =
-  { foo : String
+  { equipment : Equiment
   }
+
+type Equiment
+  = UE
+  | ENB
+  | MME
 
 -- | Msg
 type Msg = NoOp
 
 init : (Model, Cmd Msg)
-init = ({foo = "hello"}, Cmd.none)
+init = ({equipment = UE}, Cmd.none)
 
 -- | Main view, render the main window and delegating the detailed rendering
 -- to subviews.
@@ -26,18 +31,18 @@ view model =
   div [ A.class "w3-container"
       , A.style [("padding-top", "20px")]
       ]
-    [ viewEquipmentPanels model ]
+    [ viewEquipmentSelectors model ]
 
-viewEquipmentPanels : Model -> Html Msg
-viewEquipmentPanels model =
+viewEquipmentSelectors : Model -> Html Msg
+viewEquipmentSelectors model =
   div [ A.class "w3-row-padding w3-margin-bottom" ]
-      [ viewEquipmentPanel "w3-blue" "phone_iphone" "0" "UEs"
-      , viewEquipmentPanel "w3-teal" "router" "0" "ENBs"
-      , viewEquipmentPanel "w3-red" "gamepad" "0" "MMEs"
+      [ viewEquipmentSelector "w3-blue" "phone_iphone" "0" "UEs"
+      , viewEquipmentSelector "w3-teal" "router" "0" "ENBs"
+      , viewEquipmentSelector "w3-red" "gamepad" "0" "MMEs"
       ]
 
-viewEquipmentPanel : String -> String -> String -> String -> Html Msg
-viewEquipmentPanel color icon count label =
+viewEquipmentSelector : String -> String -> String -> String -> Html Msg
+viewEquipmentSelector color icon count label =
   div [ A.class "w3-third" ]
     [ div [ A.class ("w3-container w3-padding-16 " ++ color) ]
         [ div [ A.class "w3-left" ]

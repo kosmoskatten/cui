@@ -7803,7 +7803,7 @@ var _kosmoskatten$cui$CsimControlBoard$update = F2(
 	function (msg, model) {
 		return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 	});
-var _kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel = F4(
+var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector = F4(
 	function (color, icon, count, label) {
 		return A2(
 			_elm_lang$html$Html$div,
@@ -7882,7 +7882,7 @@ var _kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel = F4(
 						]))
 				]));
 	});
-var _kosmoskatten$cui$CsimControlBoard$viewEquipmentPanels = function (model) {
+var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelectors = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -7891,9 +7891,9 @@ var _kosmoskatten$cui$CsimControlBoard$viewEquipmentPanels = function (model) {
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				A4(_kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel, 'w3-blue', 'phone_iphone', '0', 'UEs'),
-				A4(_kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel, 'w3-teal', 'router', '0', 'ENBs'),
-				A4(_kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel, 'w3-red', 'gamepad', '0', 'MMEs')
+				A4(_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector, 'w3-blue', 'phone_iphone', '0', 'UEs'),
+				A4(_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector, 'w3-teal', 'router', '0', 'ENBs'),
+				A4(_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector, 'w3-red', 'gamepad', '0', 'MMEs')
 			]));
 };
 var _kosmoskatten$cui$CsimControlBoard$view = function (model) {
@@ -7910,16 +7910,19 @@ var _kosmoskatten$cui$CsimControlBoard$view = function (model) {
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_kosmoskatten$cui$CsimControlBoard$viewEquipmentPanels(model)
+				_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelectors(model)
 			]));
 };
+var _kosmoskatten$cui$CsimControlBoard$Model = function (a) {
+	return {equipment: a};
+};
+var _kosmoskatten$cui$CsimControlBoard$MME = {ctor: 'MME'};
+var _kosmoskatten$cui$CsimControlBoard$ENB = {ctor: 'ENB'};
+var _kosmoskatten$cui$CsimControlBoard$UE = {ctor: 'UE'};
 var _kosmoskatten$cui$CsimControlBoard$init = {
 	ctor: '_Tuple2',
-	_0: {foo: 'hello'},
+	_0: {equipment: _kosmoskatten$cui$CsimControlBoard$UE},
 	_1: _elm_lang$core$Platform_Cmd$none
-};
-var _kosmoskatten$cui$CsimControlBoard$Model = function (a) {
-	return {foo: a};
 };
 var _kosmoskatten$cui$CsimControlBoard$NoOp = {ctor: 'NoOp'};
 
