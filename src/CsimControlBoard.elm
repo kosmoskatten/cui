@@ -7,58 +7,93 @@ module CsimControlBoard exposing
 
 import Html exposing (..)
 import Html.Attributes as A
+import Html.Events as E
 
 -- | Model
 type alias Model =
-  { equipment : Equiment
+  { equipment : Equipment
   }
 
-type Equiment
+type Equipment
   = UE
   | ENB
   | MME
 
--- | Msg
-type Msg = NoOp
+type Msg
+  = SetEquipment Equipment
 
 init : (Model, Cmd Msg)
 init = ({equipment = UE}, Cmd.none)
 
--- | Main view, render the main window and delegating the detailed rendering
--- to subviews.
 view : Model -> Html Msg
 view model =
   div [ A.class "w3-container"
       , A.style [("padding-top", "20px")]
       ]
-    [ viewEquipmentSelectors model ]
+    [ viewEquipmentSelectors model
+    , viewEquipmentPanel model
+    ]
 
 viewEquipmentSelectors : Model -> Html Msg
 viewEquipmentSelectors model =
   div [ A.class "w3-row-padding w3-margin-bottom" ]
-      [ viewEquipmentSelector "w3-blue" "phone_iphone" "0" "UEs"
-      , viewEquipmentSelector "w3-teal" "router" "0" "ENBs"
-      , viewEquipmentSelector "w3-red" "gamepad" "0" "MMEs"
+      [ viewEquipmentSelector UE 0
+      , viewEquipmentSelector ENB 0
+      , viewEquipmentSelector MME 0
       ]
 
-viewEquipmentSelector : String -> String -> String -> String -> Html Msg
-viewEquipmentSelector color icon count label =
-  div [ A.class "w3-third" ]
-    [ div [ A.class ("w3-container w3-padding-16 " ++ color) ]
-        [ div [ A.class "w3-left" ]
-            [ i [ A.class "material-icons", A.style [("font-size", "36px")]]
-                [text icon]
-            ]
-        , div [ A.class "w3-right" ]
-            [ h3 [] [text count]
-            ]
-        , div [ A.class "w3-clear" ] []
-        , h4 [] [ text label ]
+viewEquipmentSelector : Equipment -> Int -> Html Msg
+viewEquipmentSelector eq count =
+  let (color, icon, label) = equipmentSelectorParams eq
+      countStr             = toString count
+  in
+    div [ A.class "w3-third"
+        , A.style [("cursor", "pointer")]
+        , E.onClick (SetEquipment eq)
         ]
+      [ div [ A.class ("w3-container w3-padding-16 " ++ color) ]
+          [ div [ A.class "w3-left" ]
+              [ i [ A.class "material-icons", A.style [("font-size", "36px")]]
+                  [ text icon ]
+              ]
+          , div [ A.class "w3-right" ]
+              [ h3 [] [ text countStr ]
+              ]
+          , div [ A.class "w3-clear" ] []
+          , h4 [] [ text label ]
+          ]
+      ]
+
+equipmentSelectorParams : Equipment -> (String, String, String)
+equipmentSelectorParams eq =
+  case eq of
+    UE  -> ("w3-blue", "phone_iphone", "UEs")
+    ENB -> ("w3-teal", "router", "ENBs")
+    MME -> ("w3-red", "gamepad", "MMEs")
+
+viewEquipmentPanel : Model -> Html Msg
+viewEquipmentPanel model =
+  div [ A.class "w3-container" ]
+    [ case model.equipment of
+        UE  -> viewUePanel model
+        ENB -> viewEnbPanel model
+        MME -> viewMmePanel model
     ]
 
+viewUePanel : Model -> Html Msg
+viewUePanel model = h3 [] [ text "UE" ]
+
+viewEnbPanel : Model -> Html Msg
+viewEnbPanel model = h3 [] [ text "ENB" ]
+
+viewMmePanel : Model -> Html Msg
+viewMmePanel model = h3 [] [ text "MME" ]
+
 update : Msg -> Model -> (Model, Cmd Msg)
-update msg model = (model, Cmd.none)
+update msg model =
+  case msg of
+    SetEquipment newEquipment ->
+      ({model | equipment = newEquipment}, Cmd.none)
 
 subscriptions : Model -> Sub Msg
 subscriptions model = Sub.none

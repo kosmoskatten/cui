@@ -7796,20 +7796,217 @@ var _elm_lang$html$Html_Attributes$classList = function (list) {
 };
 var _elm_lang$html$Html_Attributes$style = _elm_lang$virtual_dom$VirtualDom$style;
 
+var _elm_lang$html$Html_Events$keyCode = A2(_elm_lang$core$Json_Decode_ops[':='], 'keyCode', _elm_lang$core$Json_Decode$int);
+var _elm_lang$html$Html_Events$targetChecked = A2(
+	_elm_lang$core$Json_Decode$at,
+	_elm_lang$core$Native_List.fromArray(
+		['target', 'checked']),
+	_elm_lang$core$Json_Decode$bool);
+var _elm_lang$html$Html_Events$targetValue = A2(
+	_elm_lang$core$Json_Decode$at,
+	_elm_lang$core$Native_List.fromArray(
+		['target', 'value']),
+	_elm_lang$core$Json_Decode$string);
+var _elm_lang$html$Html_Events$defaultOptions = _elm_lang$virtual_dom$VirtualDom$defaultOptions;
+var _elm_lang$html$Html_Events$onWithOptions = _elm_lang$virtual_dom$VirtualDom$onWithOptions;
+var _elm_lang$html$Html_Events$on = _elm_lang$virtual_dom$VirtualDom$on;
+var _elm_lang$html$Html_Events$onFocus = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'focus',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onBlur = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'blur',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onSubmitOptions = _elm_lang$core$Native_Utils.update(
+	_elm_lang$html$Html_Events$defaultOptions,
+	{preventDefault: true});
+var _elm_lang$html$Html_Events$onSubmit = function (msg) {
+	return A3(
+		_elm_lang$html$Html_Events$onWithOptions,
+		'submit',
+		_elm_lang$html$Html_Events$onSubmitOptions,
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onCheck = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'change',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetChecked));
+};
+var _elm_lang$html$Html_Events$onInput = function (tagger) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'input',
+		A2(_elm_lang$core$Json_Decode$map, tagger, _elm_lang$html$Html_Events$targetValue));
+};
+var _elm_lang$html$Html_Events$onMouseOut = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseout',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseOver = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseover',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseLeave = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseleave',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseEnter = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseenter',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseUp = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mouseup',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onMouseDown = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'mousedown',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onDoubleClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'dblclick',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$onClick = function (msg) {
+	return A2(
+		_elm_lang$html$Html_Events$on,
+		'click',
+		_elm_lang$core$Json_Decode$succeed(msg));
+};
+var _elm_lang$html$Html_Events$Options = F2(
+	function (a, b) {
+		return {stopPropagation: a, preventDefault: b};
+	});
+
 var _kosmoskatten$cui$CsimControlBoard$subscriptions = function (model) {
 	return _elm_lang$core$Platform_Sub$none;
 };
 var _kosmoskatten$cui$CsimControlBoard$update = F2(
 	function (msg, model) {
-		return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+		var _p0 = msg;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				model,
+				{equipment: _p0._0}),
+			_1: _elm_lang$core$Platform_Cmd$none
+		};
 	});
-var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector = F4(
-	function (color, icon, count, label) {
+var _kosmoskatten$cui$CsimControlBoard$viewMmePanel = function (model) {
+	return A2(
+		_elm_lang$html$Html$h3,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text('MME')
+			]));
+};
+var _kosmoskatten$cui$CsimControlBoard$viewEnbPanel = function (model) {
+	return A2(
+		_elm_lang$html$Html$h3,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text('ENB')
+			]));
+};
+var _kosmoskatten$cui$CsimControlBoard$viewUePanel = function (model) {
+	return A2(
+		_elm_lang$html$Html$h3,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html$text('UE')
+			]));
+};
+var _kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('w3-container')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				function () {
+				var _p1 = model.equipment;
+				switch (_p1.ctor) {
+					case 'UE':
+						return _kosmoskatten$cui$CsimControlBoard$viewUePanel(model);
+					case 'ENB':
+						return _kosmoskatten$cui$CsimControlBoard$viewEnbPanel(model);
+					default:
+						return _kosmoskatten$cui$CsimControlBoard$viewMmePanel(model);
+				}
+			}()
+			]));
+};
+var _kosmoskatten$cui$CsimControlBoard$equipmentSelectorParams = function (eq) {
+	var _p2 = eq;
+	switch (_p2.ctor) {
+		case 'UE':
+			return {ctor: '_Tuple3', _0: 'w3-blue', _1: 'phone_iphone', _2: 'UEs'};
+		case 'ENB':
+			return {ctor: '_Tuple3', _0: 'w3-teal', _1: 'router', _2: 'ENBs'};
+		default:
+			return {ctor: '_Tuple3', _0: 'w3-red', _1: 'gamepad', _2: 'MMEs'};
+	}
+};
+var _kosmoskatten$cui$CsimControlBoard$Model = function (a) {
+	return {equipment: a};
+};
+var _kosmoskatten$cui$CsimControlBoard$MME = {ctor: 'MME'};
+var _kosmoskatten$cui$CsimControlBoard$ENB = {ctor: 'ENB'};
+var _kosmoskatten$cui$CsimControlBoard$UE = {ctor: 'UE'};
+var _kosmoskatten$cui$CsimControlBoard$init = {
+	ctor: '_Tuple2',
+	_0: {equipment: _kosmoskatten$cui$CsimControlBoard$UE},
+	_1: _elm_lang$core$Platform_Cmd$none
+};
+var _kosmoskatten$cui$CsimControlBoard$SetEquipment = function (a) {
+	return {ctor: 'SetEquipment', _0: a};
+};
+var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector = F2(
+	function (eq, count) {
+		var countStr = _elm_lang$core$Basics$toString(count);
+		var _p3 = _kosmoskatten$cui$CsimControlBoard$equipmentSelectorParams(eq);
+		var color = _p3._0;
+		var icon = _p3._1;
+		var label = _p3._2;
 		return A2(
 			_elm_lang$html$Html$div,
 			_elm_lang$core$Native_List.fromArray(
 				[
-					_elm_lang$html$Html_Attributes$class('w3-third')
+					_elm_lang$html$Html_Attributes$class('w3-third'),
+					_elm_lang$html$Html_Attributes$style(
+					_elm_lang$core$Native_List.fromArray(
+						[
+							{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
+						])),
+					_elm_lang$html$Html_Events$onClick(
+					_kosmoskatten$cui$CsimControlBoard$SetEquipment(eq))
 				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
@@ -7860,7 +8057,7 @@ var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector = F4(
 										[]),
 									_elm_lang$core$Native_List.fromArray(
 										[
-											_elm_lang$html$Html$text(count)
+											_elm_lang$html$Html$text(countStr)
 										]))
 								])),
 							A2(
@@ -7891,9 +8088,9 @@ var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelectors = function (model)
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				A4(_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector, 'w3-blue', 'phone_iphone', '0', 'UEs'),
-				A4(_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector, 'w3-teal', 'router', '0', 'ENBs'),
-				A4(_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector, 'w3-red', 'gamepad', '0', 'MMEs')
+				A2(_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector, _kosmoskatten$cui$CsimControlBoard$UE, 0),
+				A2(_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector, _kosmoskatten$cui$CsimControlBoard$ENB, 0),
+				A2(_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector, _kosmoskatten$cui$CsimControlBoard$MME, 0)
 			]));
 };
 var _kosmoskatten$cui$CsimControlBoard$view = function (model) {
@@ -7910,21 +8107,10 @@ var _kosmoskatten$cui$CsimControlBoard$view = function (model) {
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelectors(model)
+				_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelectors(model),
+				_kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel(model)
 			]));
 };
-var _kosmoskatten$cui$CsimControlBoard$Model = function (a) {
-	return {equipment: a};
-};
-var _kosmoskatten$cui$CsimControlBoard$MME = {ctor: 'MME'};
-var _kosmoskatten$cui$CsimControlBoard$ENB = {ctor: 'ENB'};
-var _kosmoskatten$cui$CsimControlBoard$UE = {ctor: 'UE'};
-var _kosmoskatten$cui$CsimControlBoard$init = {
-	ctor: '_Tuple2',
-	_0: {equipment: _kosmoskatten$cui$CsimControlBoard$UE},
-	_1: _elm_lang$core$Platform_Cmd$none
-};
-var _kosmoskatten$cui$CsimControlBoard$NoOp = {ctor: 'NoOp'};
 
 var _kosmoskatten$cui$Main$main = {
 	main: _elm_lang$html$Html_App$program(
