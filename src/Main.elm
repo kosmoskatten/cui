@@ -1,6 +1,6 @@
 import Html.App as App
 
-import CsimControlBoard exposing (init, view, update, subscriptions)
+import CsimControlApp exposing (init, view, update, subscriptions)
 
 main : Program Never
 main =

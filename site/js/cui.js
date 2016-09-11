@@ -7897,21 +7897,14 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
-var _kosmoskatten$cui$CsimControlBoard$subscriptions = function (model) {
-	return _elm_lang$core$Platform_Sub$none;
+var _kosmoskatten$cui$Types$MME = {ctor: 'MME'};
+var _kosmoskatten$cui$Types$ENB = {ctor: 'ENB'};
+var _kosmoskatten$cui$Types$UE = {ctor: 'UE'};
+var _kosmoskatten$cui$Types$SetLivePanel = function (a) {
+	return {ctor: 'SetLivePanel', _0: a};
 };
-var _kosmoskatten$cui$CsimControlBoard$update = F2(
-	function (msg, model) {
-		var _p0 = msg;
-		return {
-			ctor: '_Tuple2',
-			_0: _elm_lang$core$Native_Utils.update(
-				model,
-				{livePanel: _p0._0}),
-			_1: _elm_lang$core$Platform_Cmd$none
-		};
-	});
-var _kosmoskatten$cui$CsimControlBoard$addNewMme = function (model) {
+
+var _kosmoskatten$cui$MmePanel$addNewMme = function (model) {
 	return A2(
 		_elm_lang$html$Html$tr,
 		_elm_lang$core$Native_List.fromArray(
@@ -7951,7 +7944,7 @@ var _kosmoskatten$cui$CsimControlBoard$addNewMme = function (model) {
 					]))
 			]));
 };
-var _kosmoskatten$cui$CsimControlBoard$viewMmeList = function (model) {
+var _kosmoskatten$cui$MmePanel$viewMmeList = function (model) {
 	return A2(
 		_elm_lang$html$Html$table,
 		_elm_lang$core$Native_List.fromArray(
@@ -7960,10 +7953,10 @@ var _kosmoskatten$cui$CsimControlBoard$viewMmeList = function (model) {
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_kosmoskatten$cui$CsimControlBoard$addNewMme(model)
+				_kosmoskatten$cui$MmePanel$addNewMme(model)
 			]));
 };
-var _kosmoskatten$cui$CsimControlBoard$viewMmePanel = function (model) {
+var _kosmoskatten$cui$MmePanel$viewMmePanel = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -7980,10 +7973,29 @@ var _kosmoskatten$cui$CsimControlBoard$viewMmePanel = function (model) {
 					[
 						_elm_lang$html$Html$text('MMEs')
 					])),
-				_kosmoskatten$cui$CsimControlBoard$viewMmeList(model)
+				_kosmoskatten$cui$MmePanel$viewMmeList(model)
 			]));
 };
-var _kosmoskatten$cui$CsimControlBoard$viewEnbPanel = function (model) {
+var _kosmoskatten$cui$MmePanel$initMme = {isAddingNewMme: false};
+var _kosmoskatten$cui$MmePanel$MmeModel = function (a) {
+	return {isAddingNewMme: a};
+};
+
+var _kosmoskatten$cui$CsimControlApp$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$none;
+};
+var _kosmoskatten$cui$CsimControlApp$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		return {
+			ctor: '_Tuple2',
+			_0: _elm_lang$core$Native_Utils.update(
+				model,
+				{livePanel: _p0._0}),
+			_1: _elm_lang$core$Platform_Cmd$none
+		};
+	});
+var _kosmoskatten$cui$CsimControlApp$viewEnbPanel = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -8002,7 +8014,7 @@ var _kosmoskatten$cui$CsimControlBoard$viewEnbPanel = function (model) {
 					]))
 			]));
 };
-var _kosmoskatten$cui$CsimControlBoard$viewUePanel = function (model) {
+var _kosmoskatten$cui$CsimControlApp$viewUePanel = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -8021,18 +8033,18 @@ var _kosmoskatten$cui$CsimControlBoard$viewUePanel = function (model) {
 					]))
 			]));
 };
-var _kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel = function (model) {
+var _kosmoskatten$cui$CsimControlApp$viewEquipmentPanel = function (model) {
 	var _p1 = model.livePanel;
 	switch (_p1.ctor) {
 		case 'UE':
-			return _kosmoskatten$cui$CsimControlBoard$viewUePanel(model);
+			return _kosmoskatten$cui$CsimControlApp$viewUePanel(model);
 		case 'ENB':
-			return _kosmoskatten$cui$CsimControlBoard$viewEnbPanel(model);
+			return _kosmoskatten$cui$CsimControlApp$viewEnbPanel(model);
 		default:
-			return _kosmoskatten$cui$CsimControlBoard$viewMmePanel(model.mmeModel);
+			return _kosmoskatten$cui$MmePanel$viewMmePanel(model.mmeModel);
 	}
 };
-var _kosmoskatten$cui$CsimControlBoard$equipmentSelectorParams = function (eq) {
+var _kosmoskatten$cui$CsimControlApp$equipmentSelectorParams = function (eq) {
 	var _p2 = eq;
 	switch (_p2.ctor) {
 		case 'UE':
@@ -8043,29 +8055,10 @@ var _kosmoskatten$cui$CsimControlBoard$equipmentSelectorParams = function (eq) {
 			return {ctor: '_Tuple3', _0: 'w3-red', _1: 'gamepad', _2: 'MMEs'};
 	}
 };
-var _kosmoskatten$cui$CsimControlBoard$initMme = {isAddingNewMme: false};
-var _kosmoskatten$cui$CsimControlBoard$Model = F2(
-	function (a, b) {
-		return {livePanel: a, mmeModel: b};
-	});
-var _kosmoskatten$cui$CsimControlBoard$MmeModel = function (a) {
-	return {isAddingNewMme: a};
-};
-var _kosmoskatten$cui$CsimControlBoard$MME = {ctor: 'MME'};
-var _kosmoskatten$cui$CsimControlBoard$ENB = {ctor: 'ENB'};
-var _kosmoskatten$cui$CsimControlBoard$UE = {ctor: 'UE'};
-var _kosmoskatten$cui$CsimControlBoard$init = {
-	ctor: '_Tuple2',
-	_0: {livePanel: _kosmoskatten$cui$CsimControlBoard$UE, mmeModel: _kosmoskatten$cui$CsimControlBoard$initMme},
-	_1: _elm_lang$core$Platform_Cmd$none
-};
-var _kosmoskatten$cui$CsimControlBoard$SetLivePanel = function (a) {
-	return {ctor: 'SetLivePanel', _0: a};
-};
-var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector = F2(
+var _kosmoskatten$cui$CsimControlApp$viewEquipmentSelector = F2(
 	function (eq, count) {
 		var countStr = _elm_lang$core$Basics$toString(count);
-		var _p3 = _kosmoskatten$cui$CsimControlBoard$equipmentSelectorParams(eq);
+		var _p3 = _kosmoskatten$cui$CsimControlApp$equipmentSelectorParams(eq);
 		var color = _p3._0;
 		var icon = _p3._1;
 		var label = _p3._2;
@@ -8080,7 +8073,7 @@ var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector = F2(
 							{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
 						])),
 					_elm_lang$html$Html_Events$onClick(
-					_kosmoskatten$cui$CsimControlBoard$SetLivePanel(eq))
+					_kosmoskatten$cui$Types$SetLivePanel(eq))
 				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
@@ -8153,7 +8146,7 @@ var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector = F2(
 						]))
 				]));
 	});
-var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelectors = function (model) {
+var _kosmoskatten$cui$CsimControlApp$viewEquipmentSelectors = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -8162,12 +8155,12 @@ var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelectors = function (model)
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				A2(_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector, _kosmoskatten$cui$CsimControlBoard$UE, 0),
-				A2(_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector, _kosmoskatten$cui$CsimControlBoard$ENB, 0),
-				A2(_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector, _kosmoskatten$cui$CsimControlBoard$MME, 0)
+				A2(_kosmoskatten$cui$CsimControlApp$viewEquipmentSelector, _kosmoskatten$cui$Types$UE, 0),
+				A2(_kosmoskatten$cui$CsimControlApp$viewEquipmentSelector, _kosmoskatten$cui$Types$ENB, 0),
+				A2(_kosmoskatten$cui$CsimControlApp$viewEquipmentSelector, _kosmoskatten$cui$Types$MME, 0)
 			]));
 };
-var _kosmoskatten$cui$CsimControlBoard$view = function (model) {
+var _kosmoskatten$cui$CsimControlApp$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -8181,14 +8174,23 @@ var _kosmoskatten$cui$CsimControlBoard$view = function (model) {
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_kosmoskatten$cui$CsimControlBoard$viewEquipmentSelectors(model),
-				_kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel(model)
+				_kosmoskatten$cui$CsimControlApp$viewEquipmentSelectors(model),
+				_kosmoskatten$cui$CsimControlApp$viewEquipmentPanel(model)
 			]));
 };
+var _kosmoskatten$cui$CsimControlApp$init = {
+	ctor: '_Tuple2',
+	_0: {livePanel: _kosmoskatten$cui$Types$UE, mmeModel: _kosmoskatten$cui$MmePanel$initMme},
+	_1: _elm_lang$core$Platform_Cmd$none
+};
+var _kosmoskatten$cui$CsimControlApp$Model = F2(
+	function (a, b) {
+		return {livePanel: a, mmeModel: b};
+	});
 
 var _kosmoskatten$cui$Main$main = {
 	main: _elm_lang$html$Html_App$program(
-		{init: _kosmoskatten$cui$CsimControlBoard$init, view: _kosmoskatten$cui$CsimControlBoard$view, update: _kosmoskatten$cui$CsimControlBoard$update, subscriptions: _kosmoskatten$cui$CsimControlBoard$subscriptions})
+		{init: _kosmoskatten$cui$CsimControlApp$init, view: _kosmoskatten$cui$CsimControlApp$view, update: _kosmoskatten$cui$CsimControlApp$update, subscriptions: _kosmoskatten$cui$CsimControlApp$subscriptions})
 };
 
 var Elm = {};

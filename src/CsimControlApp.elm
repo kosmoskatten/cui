@@ -1,4 +1,4 @@
-module CsimControlBoard exposing
+module CsimControlApp exposing
   ( init
   , view
   , update
@@ -9,30 +9,17 @@ import Html exposing (..)
 import Html.Attributes as A
 import Html.Events as E
 
+import MmePanel exposing (..)
+import Types exposing (..)
+
 -- Main model.
 type alias Model =
   { livePanel : Equipment
   , mmeModel  : MmeModel
   }
 
--- Sub model for Mme.
-type alias MmeModel =
-  { isAddingNewMme : Bool
-  }
-
-type Equipment
-  = UE
-  | ENB
-  | MME
-
-type Msg
-  = SetLivePanel Equipment
-
 init : (Model, Cmd Msg)
 init = ({livePanel = UE, mmeModel = initMme}, Cmd.none)
-
-initMme : MmeModel
-initMme = {isAddingNewMme = False}
 
 -- Main view.
 view : Model -> Html Msg
@@ -98,29 +85,6 @@ viewEnbPanel : Model -> Html Msg
 viewEnbPanel model =
   div [ A.class "w3-container" ]
     [ h4 [] [ text "ENBs" ]
-    ]
-
-viewMmePanel : MmeModel -> Html Msg
-viewMmePanel model =
-  div [ A.class "w3-container" ]
-    [ h4 [] [ text "MMEs" ]
-    , viewMmeList model
-    ]
-
-viewMmeList : MmeModel -> Html Msg
-viewMmeList model =
-  table [ A.class "w3-table w3-striped w3-white" ]
-    [addNewMme model]
-
-addNewMme : MmeModel -> Html Msg
-addNewMme model =
-  tr [ A.style [("cursor", "pointer")] ]
-    [ td []
-        [ i [ A.class "material-icons w3-padding-tiny" ]
-            [ text "add" ]
-        ]
-    , td []
-        [ text "Add new MME" ]
     ]
 
 -- Update
