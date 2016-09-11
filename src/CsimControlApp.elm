@@ -97,5 +97,8 @@ update msg model =
     OpenNewMmeForm            ->
       ({model | mmeModel = openNewMmeForm model.mmeModel}, Cmd.none)
 
+    CancelNewMmeForm          ->
+      ({model | mmeModel = cancelNewMmeForm model.mmeModel}, Cmd.none)
+
 subscriptions : Model -> Sub Msg
 subscriptions model = Sub.none

@@ -3,6 +3,7 @@ module MmePanel exposing
   , initMme
   , viewMmePanel
   , openNewMmeForm
+  , cancelNewMmeForm
   )
 
 import Html exposing (..)
@@ -14,10 +15,14 @@ import Types exposing (..)
 -- Sub model for Mme.
 type alias MmeModel =
   { newMmeFormOpen : Bool
+  , newMmeName : String
   }
 
 initMme : MmeModel
-initMme = {newMmeFormOpen = False}
+initMme =
+  { newMmeFormOpen = False
+  , newMmeName = ""
+  }
 
 viewMmePanel : MmeModel -> Html Msg
 viewMmePanel model =
@@ -53,8 +58,26 @@ addNewMme model =
 
 newMmeForm : MmeModel -> Html Msg
 newMmeForm model =
-  tr [] []
+  tr []
+    [ div [ A.class "w3-container w3-red" ]
+        [ h2 [] [ text "New MME" ] ]
+    , form [ A.class "w3-container" ]
+        [ p [] []
+        , label [] [ text "MME Name" ]
+        , input [ A.class "w3-input"
+                , A.placeholder "Name for the MME, e.g. mme1"
+                , A.value model.newMmeName
+                ] []
+        , button [ E.onClick CancelNewMmeForm
+                 ] [ text "Cancel" ]
+        ]
+    ]
 
 -- Update event callbacks.
 openNewMmeForm : MmeModel -> MmeModel
 openNewMmeForm model = {model | newMmeFormOpen = True}
+
+cancelNewMmeForm : MmeModel -> MmeModel
+cancelNewMmeForm model = {model | newMmeFormOpen = False
+                                , newMmeName = ""
+                         }
