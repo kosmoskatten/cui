@@ -11,7 +11,7 @@ import Html.Events as E
 
 -- | Model
 type alias Model =
-  { equipment : Equipment
+  { livePanel : Equipment
   }
 
 type Equipment
@@ -20,11 +20,12 @@ type Equipment
   | MME
 
 type Msg
-  = SetEquipment Equipment
+  = SetLivePanel Equipment
 
 init : (Model, Cmd Msg)
-init = ({equipment = UE}, Cmd.none)
+init = ({livePanel = UE}, Cmd.none)
 
+-- Main view.
 view : Model -> Html Msg
 view model =
   div [ A.class "w3-container"
@@ -49,7 +50,7 @@ viewEquipmentSelector eq count =
   in
     div [ A.class "w3-third"
         , A.style [("cursor", "pointer")]
-        , E.onClick (SetEquipment eq)
+        , E.onClick (SetLivePanel eq)
         ]
       [ div [ A.class ("w3-container w3-padding-16 " ++ color) ]
           [ div [ A.class "w3-left" ]
@@ -73,27 +74,52 @@ equipmentSelectorParams eq =
 
 viewEquipmentPanel : Model -> Html Msg
 viewEquipmentPanel model =
-  div [ A.class "w3-container" ]
-    [ case model.equipment of
+  case model.livePanel of
         UE  -> viewUePanel model
         ENB -> viewEnbPanel model
         MME -> viewMmePanel model
-    ]
 
 viewUePanel : Model -> Html Msg
-viewUePanel model = h3 [] [ text "UE" ]
+viewUePanel model =
+  div [ A.class "w3-container" ]
+    [ h4 [] [ text "UEs" ]
+    ]
 
 viewEnbPanel : Model -> Html Msg
-viewEnbPanel model = h3 [] [ text "ENB" ]
+viewEnbPanel model =
+  div [ A.class "w3-container" ]
+    [ h4 [] [ text "ENBs" ]
+    ]
 
 viewMmePanel : Model -> Html Msg
-viewMmePanel model = h3 [] [ text "MME" ]
+viewMmePanel model =
+  div [ A.class "w3-container" ]
+    [ h4 [] [ text "MMEs" ]
+    , viewMmeList model
+    ]
 
+viewMmeList : Model -> Html Msg
+viewMmeList model =
+  table [ A.class "w3-table w3-striped w3-white" ]
+    [addNewMme model]
+
+addNewMme : Model -> Html Msg
+addNewMme model =
+  tr []
+    [ td []
+        [ i [ A.class "material-icons w3-padding-tiny" ]
+            [ text "add" ]
+        ]
+    , td []
+        [ text "Add new MME" ]
+    ]
+
+-- Update
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of
-    SetEquipment newEquipment ->
-      ({model | equipment = newEquipment}, Cmd.none)
+    SetLivePanel newEquipment ->
+      ({model | livePanel = newEquipment}, Cmd.none)
 
 subscriptions : Model -> Sub Msg
 subscriptions model = Sub.none

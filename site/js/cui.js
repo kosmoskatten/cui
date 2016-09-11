@@ -7907,41 +7907,57 @@ var _kosmoskatten$cui$CsimControlBoard$update = F2(
 			ctor: '_Tuple2',
 			_0: _elm_lang$core$Native_Utils.update(
 				model,
-				{equipment: _p0._0}),
+				{livePanel: _p0._0}),
 			_1: _elm_lang$core$Platform_Cmd$none
 		};
 	});
+var _kosmoskatten$cui$CsimControlBoard$addNewMme = function (model) {
+	return A2(
+		_elm_lang$html$Html$tr,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$td,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$i,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('material-icons w3-padding-tiny')
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('add')
+							]))
+					])),
+				A2(
+				_elm_lang$html$Html$td,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Add new MME')
+					]))
+			]));
+};
+var _kosmoskatten$cui$CsimControlBoard$viewMmeList = function (model) {
+	return A2(
+		_elm_lang$html$Html$table,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('w3-table w3-striped w3-white')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_kosmoskatten$cui$CsimControlBoard$addNewMme(model)
+			]));
+};
 var _kosmoskatten$cui$CsimControlBoard$viewMmePanel = function (model) {
-	return A2(
-		_elm_lang$html$Html$h3,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html$text('MME')
-			]));
-};
-var _kosmoskatten$cui$CsimControlBoard$viewEnbPanel = function (model) {
-	return A2(
-		_elm_lang$html$Html$h3,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html$text('ENB')
-			]));
-};
-var _kosmoskatten$cui$CsimControlBoard$viewUePanel = function (model) {
-	return A2(
-		_elm_lang$html$Html$h3,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html$text('UE')
-			]));
-};
-var _kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -7950,18 +7966,65 @@ var _kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel = function (model) {
 			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
-				function () {
-				var _p1 = model.equipment;
-				switch (_p1.ctor) {
-					case 'UE':
-						return _kosmoskatten$cui$CsimControlBoard$viewUePanel(model);
-					case 'ENB':
-						return _kosmoskatten$cui$CsimControlBoard$viewEnbPanel(model);
-					default:
-						return _kosmoskatten$cui$CsimControlBoard$viewMmePanel(model);
-				}
-			}()
+				A2(
+				_elm_lang$html$Html$h4,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('MMEs')
+					])),
+				_kosmoskatten$cui$CsimControlBoard$viewMmeList(model)
 			]));
+};
+var _kosmoskatten$cui$CsimControlBoard$viewEnbPanel = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('w3-container')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$h4,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('ENBs')
+					]))
+			]));
+};
+var _kosmoskatten$cui$CsimControlBoard$viewUePanel = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('w3-container')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$h4,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('UEs')
+					]))
+			]));
+};
+var _kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel = function (model) {
+	var _p1 = model.livePanel;
+	switch (_p1.ctor) {
+		case 'UE':
+			return _kosmoskatten$cui$CsimControlBoard$viewUePanel(model);
+		case 'ENB':
+			return _kosmoskatten$cui$CsimControlBoard$viewEnbPanel(model);
+		default:
+			return _kosmoskatten$cui$CsimControlBoard$viewMmePanel(model);
+	}
 };
 var _kosmoskatten$cui$CsimControlBoard$equipmentSelectorParams = function (eq) {
 	var _p2 = eq;
@@ -7975,18 +8038,18 @@ var _kosmoskatten$cui$CsimControlBoard$equipmentSelectorParams = function (eq) {
 	}
 };
 var _kosmoskatten$cui$CsimControlBoard$Model = function (a) {
-	return {equipment: a};
+	return {livePanel: a};
 };
 var _kosmoskatten$cui$CsimControlBoard$MME = {ctor: 'MME'};
 var _kosmoskatten$cui$CsimControlBoard$ENB = {ctor: 'ENB'};
 var _kosmoskatten$cui$CsimControlBoard$UE = {ctor: 'UE'};
 var _kosmoskatten$cui$CsimControlBoard$init = {
 	ctor: '_Tuple2',
-	_0: {equipment: _kosmoskatten$cui$CsimControlBoard$UE},
+	_0: {livePanel: _kosmoskatten$cui$CsimControlBoard$UE},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
-var _kosmoskatten$cui$CsimControlBoard$SetEquipment = function (a) {
-	return {ctor: 'SetEquipment', _0: a};
+var _kosmoskatten$cui$CsimControlBoard$SetLivePanel = function (a) {
+	return {ctor: 'SetLivePanel', _0: a};
 };
 var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector = F2(
 	function (eq, count) {
@@ -8006,7 +8069,7 @@ var _kosmoskatten$cui$CsimControlBoard$viewEquipmentSelector = F2(
 							{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
 						])),
 					_elm_lang$html$Html_Events$onClick(
-					_kosmoskatten$cui$CsimControlBoard$SetEquipment(eq))
+					_kosmoskatten$cui$CsimControlBoard$SetLivePanel(eq))
 				]),
 			_elm_lang$core$Native_List.fromArray(
 				[
