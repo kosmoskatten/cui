@@ -9,9 +9,15 @@ import Html exposing (..)
 import Html.Attributes as A
 import Html.Events as E
 
--- | Model
+-- Main model.
 type alias Model =
   { livePanel : Equipment
+  , mmeModel  : MmeModel
+  }
+
+-- Sub model for Mme.
+type alias MmeModel =
+  { isAddingNewMme : Bool
   }
 
 type Equipment
@@ -23,7 +29,10 @@ type Msg
   = SetLivePanel Equipment
 
 init : (Model, Cmd Msg)
-init = ({livePanel = UE}, Cmd.none)
+init = ({livePanel = UE, mmeModel = initMme}, Cmd.none)
+
+initMme : MmeModel
+initMme = {isAddingNewMme = False}
 
 -- Main view.
 view : Model -> Html Msg
@@ -77,7 +86,7 @@ viewEquipmentPanel model =
   case model.livePanel of
         UE  -> viewUePanel model
         ENB -> viewEnbPanel model
-        MME -> viewMmePanel model
+        MME -> viewMmePanel model.mmeModel
 
 viewUePanel : Model -> Html Msg
 viewUePanel model =
@@ -91,21 +100,21 @@ viewEnbPanel model =
     [ h4 [] [ text "ENBs" ]
     ]
 
-viewMmePanel : Model -> Html Msg
+viewMmePanel : MmeModel -> Html Msg
 viewMmePanel model =
   div [ A.class "w3-container" ]
     [ h4 [] [ text "MMEs" ]
     , viewMmeList model
     ]
 
-viewMmeList : Model -> Html Msg
+viewMmeList : MmeModel -> Html Msg
 viewMmeList model =
   table [ A.class "w3-table w3-striped w3-white" ]
     [addNewMme model]
 
-addNewMme : Model -> Html Msg
+addNewMme : MmeModel -> Html Msg
 addNewMme model =
-  tr []
+  tr [ A.style [("cursor", "pointer")] ]
     [ td []
         [ i [ A.class "material-icons w3-padding-tiny" ]
             [ text "add" ]

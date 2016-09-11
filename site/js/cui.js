@@ -7915,7 +7915,13 @@ var _kosmoskatten$cui$CsimControlBoard$addNewMme = function (model) {
 	return A2(
 		_elm_lang$html$Html$tr,
 		_elm_lang$core$Native_List.fromArray(
-			[]),
+			[
+				_elm_lang$html$Html_Attributes$style(
+				_elm_lang$core$Native_List.fromArray(
+					[
+						{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
+					]))
+			]),
 		_elm_lang$core$Native_List.fromArray(
 			[
 				A2(
@@ -8023,7 +8029,7 @@ var _kosmoskatten$cui$CsimControlBoard$viewEquipmentPanel = function (model) {
 		case 'ENB':
 			return _kosmoskatten$cui$CsimControlBoard$viewEnbPanel(model);
 		default:
-			return _kosmoskatten$cui$CsimControlBoard$viewMmePanel(model);
+			return _kosmoskatten$cui$CsimControlBoard$viewMmePanel(model.mmeModel);
 	}
 };
 var _kosmoskatten$cui$CsimControlBoard$equipmentSelectorParams = function (eq) {
@@ -8037,15 +8043,20 @@ var _kosmoskatten$cui$CsimControlBoard$equipmentSelectorParams = function (eq) {
 			return {ctor: '_Tuple3', _0: 'w3-red', _1: 'gamepad', _2: 'MMEs'};
 	}
 };
-var _kosmoskatten$cui$CsimControlBoard$Model = function (a) {
-	return {livePanel: a};
+var _kosmoskatten$cui$CsimControlBoard$initMme = {isAddingNewMme: false};
+var _kosmoskatten$cui$CsimControlBoard$Model = F2(
+	function (a, b) {
+		return {livePanel: a, mmeModel: b};
+	});
+var _kosmoskatten$cui$CsimControlBoard$MmeModel = function (a) {
+	return {isAddingNewMme: a};
 };
 var _kosmoskatten$cui$CsimControlBoard$MME = {ctor: 'MME'};
 var _kosmoskatten$cui$CsimControlBoard$ENB = {ctor: 'ENB'};
 var _kosmoskatten$cui$CsimControlBoard$UE = {ctor: 'UE'};
 var _kosmoskatten$cui$CsimControlBoard$init = {
 	ctor: '_Tuple2',
-	_0: {livePanel: _kosmoskatten$cui$CsimControlBoard$UE},
+	_0: {livePanel: _kosmoskatten$cui$CsimControlBoard$UE, mmeModel: _kosmoskatten$cui$CsimControlBoard$initMme},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 var _kosmoskatten$cui$CsimControlBoard$SetLivePanel = function (a) {
