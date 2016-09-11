@@ -7900,12 +7900,21 @@ var _elm_lang$html$Html_Events$Options = F2(
 var _kosmoskatten$cui$Types$MME = {ctor: 'MME'};
 var _kosmoskatten$cui$Types$ENB = {ctor: 'ENB'};
 var _kosmoskatten$cui$Types$UE = {ctor: 'UE'};
+var _kosmoskatten$cui$Types$OnInputNewMmeName = function (a) {
+	return {ctor: 'OnInputNewMmeName', _0: a};
+};
 var _kosmoskatten$cui$Types$CancelNewMmeForm = {ctor: 'CancelNewMmeForm'};
 var _kosmoskatten$cui$Types$OpenNewMmeForm = {ctor: 'OpenNewMmeForm'};
 var _kosmoskatten$cui$Types$SetLivePanel = function (a) {
 	return {ctor: 'SetLivePanel', _0: a};
 };
 
+var _kosmoskatten$cui$MmePanel$onInputNewMmeName = F2(
+	function (model, newName) {
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{newMmeName: newName});
+	});
 var _kosmoskatten$cui$MmePanel$cancelNewMmeForm = function (model) {
 	return _elm_lang$core$Native_Utils.update(
 		model,
@@ -7916,9 +7925,19 @@ var _kosmoskatten$cui$MmePanel$openNewMmeForm = function (model) {
 		model,
 		{newMmeFormOpen: true});
 };
+var _kosmoskatten$cui$MmePanel$viewMmeList = function (model) {
+	return A2(
+		_elm_lang$html$Html$table,
+		_elm_lang$core$Native_List.fromArray(
+			[
+				_elm_lang$html$Html_Attributes$class('w3-table w3-striped w3-white')
+			]),
+		_elm_lang$core$Native_List.fromArray(
+			[]));
+};
 var _kosmoskatten$cui$MmePanel$newMmeForm = function (model) {
 	return A2(
-		_elm_lang$html$Html$tr,
+		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
 			[]),
 		_elm_lang$core$Native_List.fromArray(
@@ -7927,24 +7946,29 @@ var _kosmoskatten$cui$MmePanel$newMmeForm = function (model) {
 				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Attributes$class('w3-container w3-red')
+						_elm_lang$html$Html_Attributes$class('w3-container w3-blue-grey')
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
 						A2(
-						_elm_lang$html$Html$h2,
+						_elm_lang$html$Html$h4,
 						_elm_lang$core$Native_List.fromArray(
 							[]),
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_elm_lang$html$Html$text('New MME')
+								_elm_lang$html$Html$text('Add new MME')
 							]))
 					])),
 				A2(
 				_elm_lang$html$Html$form,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Attributes$class('w3-container')
+						_elm_lang$html$Html_Attributes$class('w3-container'),
+						_elm_lang$html$Html_Attributes$style(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								{ctor: '_Tuple2', _0: 'padding-bottom', _1: '20px'}
+							]))
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
@@ -7960,86 +7984,88 @@ var _kosmoskatten$cui$MmePanel$newMmeForm = function (model) {
 							[]),
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_elm_lang$html$Html$text('MME Name')
+								_elm_lang$html$Html$text('New MME Name')
 							])),
 						A2(
 						_elm_lang$html$Html$input,
 						_elm_lang$core$Native_List.fromArray(
 							[
-								_elm_lang$html$Html_Attributes$class('w3-input'),
-								_elm_lang$html$Html_Attributes$placeholder('Name for the MME, e.g. mme1'),
-								_elm_lang$html$Html_Attributes$value(model.newMmeName)
+								_elm_lang$html$Html_Attributes$class('w3-input w3-light-grey'),
+								_elm_lang$html$Html_Attributes$type$('text'),
+								_elm_lang$html$Html_Attributes$placeholder('Name for the new MME (e.g. mme1)'),
+								_elm_lang$html$Html_Attributes$value(model.newMmeName),
+								_elm_lang$html$Html_Events$onInput(_kosmoskatten$cui$Types$OnInputNewMmeName)
 							]),
 						_elm_lang$core$Native_List.fromArray(
-							[])),
-						A2(
-						_elm_lang$html$Html$button,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Events$onClick(_kosmoskatten$cui$Types$CancelNewMmeForm)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('Cancel')
-							]))
-					]))
-			]));
-};
-var _kosmoskatten$cui$MmePanel$addNewMme = function (model) {
-	return A2(
-		_elm_lang$html$Html$tr,
-		_elm_lang$core$Native_List.fromArray(
-			[]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				A2(
-				_elm_lang$html$Html$td,
-				_elm_lang$core$Native_List.fromArray(
-					[]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						A2(
-						_elm_lang$html$Html$i,
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html_Attributes$class('material-icons w3-padding-tiny'),
-								_elm_lang$html$Html_Attributes$style(
-								_elm_lang$core$Native_List.fromArray(
-									[
-										{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
-									])),
-								_elm_lang$html$Html_Events$onClick(_kosmoskatten$cui$Types$OpenNewMmeForm)
-							]),
-						_elm_lang$core$Native_List.fromArray(
-							[
-								_elm_lang$html$Html$text('add')
-							]))
+							[]))
 					])),
 				A2(
-				_elm_lang$html$Html$td,
-				_elm_lang$core$Native_List.fromArray(
-					[]),
+				_elm_lang$html$Html$button,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html$text('Add new MME')
+						_elm_lang$html$Html_Attributes$class('w3-btn w3-green'),
+						_elm_lang$html$Html_Attributes$disabled(true),
+						_elm_lang$html$Html_Events$onClick(_kosmoskatten$cui$Types$CancelNewMmeForm)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Submit')
+					])),
+				A2(
+				_elm_lang$html$Html$button,
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html_Attributes$class('w3-btn w3-red'),
+						_elm_lang$html$Html_Events$onClick(_kosmoskatten$cui$Types$CancelNewMmeForm)
+					]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text('Cancel')
 					]))
 			]));
 };
-var _kosmoskatten$cui$MmePanel$mmeListTopRow = function (model) {
-	return model.newMmeFormOpen ? _kosmoskatten$cui$MmePanel$newMmeForm(model) : _kosmoskatten$cui$MmePanel$addNewMme(model);
-};
-var _kosmoskatten$cui$MmePanel$viewMmeList = function (model) {
-	return A2(
-		_elm_lang$html$Html$table,
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_elm_lang$html$Html_Attributes$class('w3-table w3-striped w3-white')
-			]),
-		_elm_lang$core$Native_List.fromArray(
-			[
-				_kosmoskatten$cui$MmePanel$mmeListTopRow(model)
-			]));
-};
+var _kosmoskatten$cui$MmePanel$addNewMme = A2(
+	_elm_lang$html$Html$div,
+	_elm_lang$core$Native_List.fromArray(
+		[
+			_elm_lang$html$Html_Attributes$class('w3-blue-grey')
+		]),
+	_elm_lang$core$Native_List.fromArray(
+		[
+			A2(
+			_elm_lang$html$Html$div,
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html_Attributes$class('w3-left')
+				]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					A2(
+					_elm_lang$html$Html$i,
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html_Attributes$class('material-icons w3-padding-tiny'),
+							_elm_lang$html$Html_Attributes$style(
+							_elm_lang$core$Native_List.fromArray(
+								[
+									{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
+								])),
+							_elm_lang$html$Html_Events$onClick(_kosmoskatten$cui$Types$OpenNewMmeForm)
+						]),
+					_elm_lang$core$Native_List.fromArray(
+						[
+							_elm_lang$html$Html$text('add')
+						]))
+				])),
+			A2(
+			_elm_lang$html$Html$h5,
+			_elm_lang$core$Native_List.fromArray(
+				[]),
+			_elm_lang$core$Native_List.fromArray(
+				[
+					_elm_lang$html$Html$text('Add new MME')
+				]))
+		]));
 var _kosmoskatten$cui$MmePanel$viewMmePanel = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -8057,6 +8083,7 @@ var _kosmoskatten$cui$MmePanel$viewMmePanel = function (model) {
 					[
 						_elm_lang$html$Html$text('MMEs')
 					])),
+				model.newMmeFormOpen ? _kosmoskatten$cui$MmePanel$newMmeForm(model) : _kosmoskatten$cui$MmePanel$addNewMme,
 				_kosmoskatten$cui$MmePanel$viewMmeList(model)
 			]));
 };
@@ -8091,13 +8118,23 @@ var _kosmoskatten$cui$CsimControlApp$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
+			case 'CancelNewMmeForm':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							mmeModel: _kosmoskatten$cui$MmePanel$cancelNewMmeForm(model.mmeModel)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							mmeModel: A2(_kosmoskatten$cui$MmePanel$onInputNewMmeName, model.mmeModel, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -8160,7 +8197,7 @@ var _kosmoskatten$cui$CsimControlApp$equipmentSelectorParams = function (eq) {
 		case 'ENB':
 			return {ctor: '_Tuple3', _0: 'w3-teal', _1: 'router', _2: 'ENBs'};
 		default:
-			return {ctor: '_Tuple3', _0: 'w3-red', _1: 'gamepad', _2: 'MMEs'};
+			return {ctor: '_Tuple3', _0: 'w3-blue-grey', _1: 'gamepad', _2: 'MMEs'};
 	}
 };
 var _kosmoskatten$cui$CsimControlApp$viewEquipmentSelector = F2(

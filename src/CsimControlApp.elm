@@ -66,7 +66,7 @@ equipmentSelectorParams eq =
   case eq of
     UE  -> ("w3-blue", "phone_iphone", "UEs")
     ENB -> ("w3-teal", "router", "ENBs")
-    MME -> ("w3-red", "gamepad", "MMEs")
+    MME -> ("w3-blue-grey", "gamepad", "MMEs")
 
 viewEquipmentPanel : Model -> Html Msg
 viewEquipmentPanel model =
@@ -99,6 +99,9 @@ update msg model =
 
     CancelNewMmeForm          ->
       ({model | mmeModel = cancelNewMmeForm model.mmeModel}, Cmd.none)
+
+    OnInputNewMmeName newName ->
+      ({model | mmeModel = onInputNewMmeName model.mmeModel newName}, Cmd.none)
 
 subscriptions : Model -> Sub Msg
 subscriptions model = Sub.none

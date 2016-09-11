@@ -12,3 +12,4 @@ type Msg
   = SetLivePanel Equipment
   | OpenNewMmeForm
   | CancelNewMmeForm
+  | OnInputNewMmeName String
