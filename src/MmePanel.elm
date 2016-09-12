@@ -12,7 +12,7 @@ module MmePanel exposing
 import Html exposing (..)
 import Html.Attributes as A
 import Html.Events as E
-import List exposing (head)
+import List exposing (head, map)
 import Maybe exposing (withDefault)
 import String exposing (length, toList, left, any)
 
@@ -91,8 +91,15 @@ newMmeForm model =
 
 viewMmeList : MmeModel -> Html Msg
 viewMmeList model =
-  table [ A.class "w3-table w3-striped w3-white" ]
-    []
+  table [ A.class "w3-table-all" ]
+    (map viewMmeListItem model.mmes)
+
+viewMmeListItem : Mme -> Html Msg
+viewMmeListItem mme =
+  tr []
+    [ td [] [ text mme.name ]
+    , td [] [ text mme.address ]
+    ]
 
 -- Update event callbacks.
 openNewMmeForm : MmeModel -> MmeModel

@@ -7978,15 +7978,39 @@ var _kosmoskatten$cui$MmePanel$openNewMmeForm = function (model) {
 		model,
 		{newMmeFormOpen: true});
 };
+var _kosmoskatten$cui$MmePanel$viewMmeListItem = function (mme) {
+	return A2(
+		_elm_lang$html$Html$tr,
+		_elm_lang$core$Native_List.fromArray(
+			[]),
+		_elm_lang$core$Native_List.fromArray(
+			[
+				A2(
+				_elm_lang$html$Html$td,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(mme.name)
+					])),
+				A2(
+				_elm_lang$html$Html$td,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						_elm_lang$html$Html$text(mme.address)
+					]))
+			]));
+};
 var _kosmoskatten$cui$MmePanel$viewMmeList = function (model) {
 	return A2(
 		_elm_lang$html$Html$table,
 		_elm_lang$core$Native_List.fromArray(
 			[
-				_elm_lang$html$Html_Attributes$class('w3-table w3-striped w3-white')
+				_elm_lang$html$Html_Attributes$class('w3-table-all')
 			]),
-		_elm_lang$core$Native_List.fromArray(
-			[]));
+		A2(_elm_lang$core$List$map, _kosmoskatten$cui$MmePanel$viewMmeListItem, model.mmes));
 };
 var _kosmoskatten$cui$MmePanel$newMmeForm = function (model) {
 	return A2(
