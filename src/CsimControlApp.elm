@@ -36,7 +36,7 @@ viewEquipmentSelectors model =
   div [ A.class "w3-row-padding w3-margin-bottom" ]
       [ viewEquipmentSelector UE 0
       , viewEquipmentSelector ENB 0
-      , viewEquipmentSelector MME 0
+      , viewEquipmentSelector MME (numMmes model.mmeModel)
       ]
 
 viewEquipmentSelector : Equipment -> Int -> Html Msg
@@ -102,6 +102,9 @@ update msg model =
 
     OnInputNewMmeName newName ->
       ({model | mmeModel = onInputNewMmeName model.mmeModel newName}, Cmd.none)
+
+    SubmitNewMmeForm newName  ->
+      ({model | mmeModel = submitNewMmeForm model.mmeModel newName}, Cmd.none)
 
 subscriptions : Model -> Sub Msg
 subscriptions model = Sub.none

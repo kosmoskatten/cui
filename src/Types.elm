@@ -13,3 +13,4 @@ type Msg
   | OpenNewMmeForm
   | CancelNewMmeForm
   | OnInputNewMmeName String
+  | SubmitNewMmeForm String

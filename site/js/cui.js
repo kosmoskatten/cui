@@ -7897,9 +7897,32 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
+var _kosmoskatten$cui$CharExtra$isSpace = function (c) {
+	return _elm_lang$core$Native_Utils.eq(
+		c,
+		_elm_lang$core$Native_Utils.chr(' ')) || (_elm_lang$core$Native_Utils.eq(
+		c,
+		_elm_lang$core$Native_Utils.chr('\n')) || (_elm_lang$core$Native_Utils.eq(
+		c,
+		_elm_lang$core$Native_Utils.chr('\r')) || _elm_lang$core$Native_Utils.eq(
+		c,
+		_elm_lang$core$Native_Utils.chr('\t'))));
+};
+var _kosmoskatten$cui$CharExtra$isAlpha = function (c) {
+	var c$ = _elm_lang$core$Char$toLower(c);
+	return (_elm_lang$core$Native_Utils.cmp(
+		c$,
+		_elm_lang$core$Native_Utils.chr('a')) > -1) && (_elm_lang$core$Native_Utils.cmp(
+		c$,
+		_elm_lang$core$Native_Utils.chr('z')) < 1);
+};
+
 var _kosmoskatten$cui$Types$MME = {ctor: 'MME'};
 var _kosmoskatten$cui$Types$ENB = {ctor: 'ENB'};
 var _kosmoskatten$cui$Types$UE = {ctor: 'UE'};
+var _kosmoskatten$cui$Types$SubmitNewMmeForm = function (a) {
+	return {ctor: 'SubmitNewMmeForm', _0: a};
+};
 var _kosmoskatten$cui$Types$OnInputNewMmeName = function (a) {
 	return {ctor: 'OnInputNewMmeName', _0: a};
 };
@@ -7909,6 +7932,36 @@ var _kosmoskatten$cui$Types$SetLivePanel = function (a) {
 	return {ctor: 'SetLivePanel', _0: a};
 };
 
+var _kosmoskatten$cui$MmePanel$firstChar = function (_p0) {
+	return _elm_lang$core$List$head(
+		_elm_lang$core$String$toList(
+			A2(_elm_lang$core$String$left, 1, _p0)));
+};
+var _kosmoskatten$cui$MmePanel$isFirstCharAlpha = function (str) {
+	var _p1 = _kosmoskatten$cui$MmePanel$firstChar(str);
+	if (_p1.ctor === 'Just') {
+		return _kosmoskatten$cui$CharExtra$isAlpha(_p1._0);
+	} else {
+		return false;
+	}
+};
+var _kosmoskatten$cui$MmePanel$shallNewMmeSubmitBeDisabled = function (newMme) {
+	return (_elm_lang$core$Native_Utils.cmp(
+		_elm_lang$core$String$length(newMme),
+		1) < 0) || (_elm_lang$core$Basics$not(
+		_kosmoskatten$cui$MmePanel$isFirstCharAlpha(newMme)) || A2(_elm_lang$core$String$any, _kosmoskatten$cui$CharExtra$isSpace, newMme));
+};
+var _kosmoskatten$cui$MmePanel$submitNewMmeForm = F2(
+	function (model, newName) {
+		var mme = {name: newName, address: '10.10.10.2'};
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{
+				newMmeFormOpen: false,
+				newMmeName: '',
+				mmes: A2(_elm_lang$core$List_ops['::'], mme, model.mmes)
+			});
+	});
 var _kosmoskatten$cui$MmePanel$onInputNewMmeName = F2(
 	function (model, newName) {
 		return _elm_lang$core$Native_Utils.update(
@@ -8004,8 +8057,10 @@ var _kosmoskatten$cui$MmePanel$newMmeForm = function (model) {
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_elm_lang$html$Html_Attributes$class('w3-btn w3-green'),
-						_elm_lang$html$Html_Attributes$disabled(true),
-						_elm_lang$html$Html_Events$onClick(_kosmoskatten$cui$Types$CancelNewMmeForm)
+						_elm_lang$html$Html_Attributes$disabled(
+						_kosmoskatten$cui$MmePanel$shallNewMmeSubmitBeDisabled(model.newMmeName)),
+						_elm_lang$html$Html_Events$onClick(
+						_kosmoskatten$cui$Types$SubmitNewMmeForm(model.newMmeName))
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
@@ -8066,6 +8121,9 @@ var _kosmoskatten$cui$MmePanel$addNewMme = A2(
 					_elm_lang$html$Html$text('Add new MME')
 				]))
 		]));
+var _kosmoskatten$cui$MmePanel$numMmes = function (model) {
+	return _elm_lang$core$List$length(model.mmes);
+};
 var _kosmoskatten$cui$MmePanel$viewMmePanel = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -8087,10 +8145,19 @@ var _kosmoskatten$cui$MmePanel$viewMmePanel = function (model) {
 				_kosmoskatten$cui$MmePanel$viewMmeList(model)
 			]));
 };
-var _kosmoskatten$cui$MmePanel$initMme = {newMmeFormOpen: false, newMmeName: ''};
-var _kosmoskatten$cui$MmePanel$MmeModel = F2(
+var _kosmoskatten$cui$MmePanel$initMme = {
+	newMmeFormOpen: false,
+	newMmeName: '',
+	mmes: _elm_lang$core$Native_List.fromArray(
+		[])
+};
+var _kosmoskatten$cui$MmePanel$MmeModel = F3(
+	function (a, b, c) {
+		return {newMmeFormOpen: a, newMmeName: b, mmes: c};
+	});
+var _kosmoskatten$cui$MmePanel$Mme = F2(
 	function (a, b) {
-		return {newMmeFormOpen: a, newMmeName: b};
+		return {name: a, address: b};
 	});
 
 var _kosmoskatten$cui$CsimControlApp$subscriptions = function (model) {
@@ -8128,13 +8195,23 @@ var _kosmoskatten$cui$CsimControlApp$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
-			default:
+			case 'OnInputNewMmeName':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
 							mmeModel: A2(_kosmoskatten$cui$MmePanel$onInputNewMmeName, model.mmeModel, _p0._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							mmeModel: A2(_kosmoskatten$cui$MmePanel$submitNewMmeForm, model.mmeModel, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -8302,7 +8379,10 @@ var _kosmoskatten$cui$CsimControlApp$viewEquipmentSelectors = function (model) {
 			[
 				A2(_kosmoskatten$cui$CsimControlApp$viewEquipmentSelector, _kosmoskatten$cui$Types$UE, 0),
 				A2(_kosmoskatten$cui$CsimControlApp$viewEquipmentSelector, _kosmoskatten$cui$Types$ENB, 0),
-				A2(_kosmoskatten$cui$CsimControlApp$viewEquipmentSelector, _kosmoskatten$cui$Types$MME, 0)
+				A2(
+				_kosmoskatten$cui$CsimControlApp$viewEquipmentSelector,
+				_kosmoskatten$cui$Types$MME,
+				_kosmoskatten$cui$MmePanel$numMmes(model.mmeModel))
 			]));
 };
 var _kosmoskatten$cui$CsimControlApp$view = function (model) {
