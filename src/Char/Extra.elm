@@ -3,6 +3,8 @@ module Char.Extra exposing
   , isSpace
   )
 
+{-| Missing functions from the Char module -}
+
 import Char exposing (toLower)
 
 {-| Check if the given character is alphabetic -}

@@ -5,6 +5,10 @@ module CsimControlApp exposing
   , subscriptions
   )
 
+{-| Top controlling module for the app. Provides the top level layout
+    and the app's message pump.
+-}
+
 import Html exposing (..)
 import Html.Attributes as A
 import Html.Events as E
@@ -87,7 +91,9 @@ viewEnbPanel model =
     [ h4 [] [ text "ENBs" ]
     ]
 
--- Update
+{-| Message pump for the app. Parts of the updating are delegated to
+    other modules.
+-}
 update : Msg -> Model -> (Model, Cmd Msg)
 update msg model =
   case msg of

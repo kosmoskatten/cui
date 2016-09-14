@@ -3,6 +3,8 @@ module Types exposing
   , Msg (..)
   )
 
+{-| Generic types, shared between the modules -}
+
 type Equipment
   = UE
   | ENB
