@@ -1,4 +1,4 @@
-module MmePanel exposing
+module Mme.Panel exposing
   ( MmeModel
   , initMme
   , viewMmePanel
@@ -9,6 +9,9 @@ module MmePanel exposing
   , submitNewMmeForm
   )
 
+{-| Viewing of, and handling the model of, the Mme control panel. -}
+
+import Char.Extra exposing (isAlpha, isSpace)
 import Html exposing (..)
 import Html.Attributes as A
 import Html.Events as E
@@ -16,7 +19,6 @@ import List exposing (head, map)
 import Maybe exposing (withDefault)
 import String exposing (length, toList, left, any)
 
-import Char.Extra exposing (isAlpha, isSpace)
 import Types exposing (..)
 
 -- Sub model for Mme.
@@ -24,11 +26,6 @@ type alias MmeModel =
   { newMmeFormOpen : Bool -- Flag to tell if the new mme form is open.
   , newMmeName : String -- The value of the new mme form's input field.
   , mmes : List Mme
-  }
-
-type alias Mme =
-  { name : String
-  , address : String
   }
 
 initMme : MmeModel

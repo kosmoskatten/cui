@@ -13,8 +13,9 @@ import Html exposing (..)
 import Html.Attributes as A
 import Html.Events as E
 
-import MmePanel exposing (..)
 import Types exposing (..)
+
+import Mme.Panel exposing (..)
 
 -- Main model.
 type alias Model =

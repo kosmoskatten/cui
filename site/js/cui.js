@@ -7917,6 +7917,10 @@ var _kosmoskatten$cui$Char_Extra$isAlpha = function (c) {
 		_elm_lang$core$Native_Utils.chr('z')) < 1);
 };
 
+var _kosmoskatten$cui$Types$Mme = F2(
+	function (a, b) {
+		return {name: a, address: b};
+	});
 var _kosmoskatten$cui$Types$MME = {ctor: 'MME'};
 var _kosmoskatten$cui$Types$ENB = {ctor: 'ENB'};
 var _kosmoskatten$cui$Types$UE = {ctor: 'UE'};
@@ -7932,26 +7936,26 @@ var _kosmoskatten$cui$Types$SetLivePanel = function (a) {
 	return {ctor: 'SetLivePanel', _0: a};
 };
 
-var _kosmoskatten$cui$MmePanel$firstChar = function (_p0) {
+var _kosmoskatten$cui$Mme_Panel$firstChar = function (_p0) {
 	return _elm_lang$core$List$head(
 		_elm_lang$core$String$toList(
 			A2(_elm_lang$core$String$left, 1, _p0)));
 };
-var _kosmoskatten$cui$MmePanel$isFirstCharAlpha = function (str) {
-	var _p1 = _kosmoskatten$cui$MmePanel$firstChar(str);
+var _kosmoskatten$cui$Mme_Panel$isFirstCharAlpha = function (str) {
+	var _p1 = _kosmoskatten$cui$Mme_Panel$firstChar(str);
 	if (_p1.ctor === 'Just') {
 		return _kosmoskatten$cui$Char_Extra$isAlpha(_p1._0);
 	} else {
 		return false;
 	}
 };
-var _kosmoskatten$cui$MmePanel$shallNewMmeSubmitBeDisabled = function (newMme) {
+var _kosmoskatten$cui$Mme_Panel$shallNewMmeSubmitBeDisabled = function (newMme) {
 	return (_elm_lang$core$Native_Utils.cmp(
 		_elm_lang$core$String$length(newMme),
 		1) < 0) || (_elm_lang$core$Basics$not(
-		_kosmoskatten$cui$MmePanel$isFirstCharAlpha(newMme)) || A2(_elm_lang$core$String$any, _kosmoskatten$cui$Char_Extra$isSpace, newMme));
+		_kosmoskatten$cui$Mme_Panel$isFirstCharAlpha(newMme)) || A2(_elm_lang$core$String$any, _kosmoskatten$cui$Char_Extra$isSpace, newMme));
 };
-var _kosmoskatten$cui$MmePanel$submitNewMmeForm = F2(
+var _kosmoskatten$cui$Mme_Panel$submitNewMmeForm = F2(
 	function (model, newName) {
 		var mme = {name: newName, address: '10.10.10.2'};
 		return _elm_lang$core$Native_Utils.update(
@@ -7962,23 +7966,23 @@ var _kosmoskatten$cui$MmePanel$submitNewMmeForm = F2(
 				mmes: A2(_elm_lang$core$List_ops['::'], mme, model.mmes)
 			});
 	});
-var _kosmoskatten$cui$MmePanel$onInputNewMmeName = F2(
+var _kosmoskatten$cui$Mme_Panel$onInputNewMmeName = F2(
 	function (model, newName) {
 		return _elm_lang$core$Native_Utils.update(
 			model,
 			{newMmeName: newName});
 	});
-var _kosmoskatten$cui$MmePanel$cancelNewMmeForm = function (model) {
+var _kosmoskatten$cui$Mme_Panel$cancelNewMmeForm = function (model) {
 	return _elm_lang$core$Native_Utils.update(
 		model,
 		{newMmeFormOpen: false, newMmeName: ''});
 };
-var _kosmoskatten$cui$MmePanel$openNewMmeForm = function (model) {
+var _kosmoskatten$cui$Mme_Panel$openNewMmeForm = function (model) {
 	return _elm_lang$core$Native_Utils.update(
 		model,
 		{newMmeFormOpen: true});
 };
-var _kosmoskatten$cui$MmePanel$viewMmeListItem = function (mme) {
+var _kosmoskatten$cui$Mme_Panel$viewMmeListItem = function (mme) {
 	return A2(
 		_elm_lang$html$Html$tr,
 		_elm_lang$core$Native_List.fromArray(
@@ -8003,16 +8007,16 @@ var _kosmoskatten$cui$MmePanel$viewMmeListItem = function (mme) {
 					]))
 			]));
 };
-var _kosmoskatten$cui$MmePanel$viewMmeList = function (model) {
+var _kosmoskatten$cui$Mme_Panel$viewMmeList = function (model) {
 	return A2(
 		_elm_lang$html$Html$table,
 		_elm_lang$core$Native_List.fromArray(
 			[
 				_elm_lang$html$Html_Attributes$class('w3-table-all')
 			]),
-		A2(_elm_lang$core$List$map, _kosmoskatten$cui$MmePanel$viewMmeListItem, model.mmes));
+		A2(_elm_lang$core$List$map, _kosmoskatten$cui$Mme_Panel$viewMmeListItem, model.mmes));
 };
-var _kosmoskatten$cui$MmePanel$newMmeForm = function (model) {
+var _kosmoskatten$cui$Mme_Panel$newMmeForm = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -8082,7 +8086,7 @@ var _kosmoskatten$cui$MmePanel$newMmeForm = function (model) {
 					[
 						_elm_lang$html$Html_Attributes$class('w3-btn w3-green'),
 						_elm_lang$html$Html_Attributes$disabled(
-						_kosmoskatten$cui$MmePanel$shallNewMmeSubmitBeDisabled(model.newMmeName)),
+						_kosmoskatten$cui$Mme_Panel$shallNewMmeSubmitBeDisabled(model.newMmeName)),
 						_elm_lang$html$Html_Events$onClick(
 						_kosmoskatten$cui$Types$SubmitNewMmeForm(model.newMmeName))
 					]),
@@ -8103,7 +8107,7 @@ var _kosmoskatten$cui$MmePanel$newMmeForm = function (model) {
 					]))
 			]));
 };
-var _kosmoskatten$cui$MmePanel$addNewMme = A2(
+var _kosmoskatten$cui$Mme_Panel$addNewMme = A2(
 	_elm_lang$html$Html$div,
 	_elm_lang$core$Native_List.fromArray(
 		[
@@ -8145,10 +8149,10 @@ var _kosmoskatten$cui$MmePanel$addNewMme = A2(
 					_elm_lang$html$Html$text('Add new MME')
 				]))
 		]));
-var _kosmoskatten$cui$MmePanel$numMmes = function (model) {
+var _kosmoskatten$cui$Mme_Panel$numMmes = function (model) {
 	return _elm_lang$core$List$length(model.mmes);
 };
-var _kosmoskatten$cui$MmePanel$viewMmePanel = function (model) {
+var _kosmoskatten$cui$Mme_Panel$viewMmePanel = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
 		_elm_lang$core$Native_List.fromArray(
@@ -8165,23 +8169,19 @@ var _kosmoskatten$cui$MmePanel$viewMmePanel = function (model) {
 					[
 						_elm_lang$html$Html$text('MMEs')
 					])),
-				model.newMmeFormOpen ? _kosmoskatten$cui$MmePanel$newMmeForm(model) : _kosmoskatten$cui$MmePanel$addNewMme,
-				_kosmoskatten$cui$MmePanel$viewMmeList(model)
+				model.newMmeFormOpen ? _kosmoskatten$cui$Mme_Panel$newMmeForm(model) : _kosmoskatten$cui$Mme_Panel$addNewMme,
+				_kosmoskatten$cui$Mme_Panel$viewMmeList(model)
 			]));
 };
-var _kosmoskatten$cui$MmePanel$initMme = {
+var _kosmoskatten$cui$Mme_Panel$initMme = {
 	newMmeFormOpen: false,
 	newMmeName: '',
 	mmes: _elm_lang$core$Native_List.fromArray(
 		[])
 };
-var _kosmoskatten$cui$MmePanel$MmeModel = F3(
+var _kosmoskatten$cui$Mme_Panel$MmeModel = F3(
 	function (a, b, c) {
 		return {newMmeFormOpen: a, newMmeName: b, mmes: c};
-	});
-var _kosmoskatten$cui$MmePanel$Mme = F2(
-	function (a, b) {
-		return {name: a, address: b};
 	});
 
 var _kosmoskatten$cui$CsimControlApp$subscriptions = function (model) {
@@ -8205,7 +8205,7 @@ var _kosmoskatten$cui$CsimControlApp$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							mmeModel: _kosmoskatten$cui$MmePanel$openNewMmeForm(model.mmeModel)
+							mmeModel: _kosmoskatten$cui$Mme_Panel$openNewMmeForm(model.mmeModel)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -8215,7 +8215,7 @@ var _kosmoskatten$cui$CsimControlApp$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							mmeModel: _kosmoskatten$cui$MmePanel$cancelNewMmeForm(model.mmeModel)
+							mmeModel: _kosmoskatten$cui$Mme_Panel$cancelNewMmeForm(model.mmeModel)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -8225,7 +8225,7 @@ var _kosmoskatten$cui$CsimControlApp$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							mmeModel: A2(_kosmoskatten$cui$MmePanel$onInputNewMmeName, model.mmeModel, _p0._0)
+							mmeModel: A2(_kosmoskatten$cui$Mme_Panel$onInputNewMmeName, model.mmeModel, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -8235,7 +8235,7 @@ var _kosmoskatten$cui$CsimControlApp$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							mmeModel: A2(_kosmoskatten$cui$MmePanel$submitNewMmeForm, model.mmeModel, _p0._0)
+							mmeModel: A2(_kosmoskatten$cui$Mme_Panel$submitNewMmeForm, model.mmeModel, _p0._0)
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
@@ -8287,7 +8287,7 @@ var _kosmoskatten$cui$CsimControlApp$viewEquipmentPanel = function (model) {
 		case 'ENB':
 			return _kosmoskatten$cui$CsimControlApp$viewEnbPanel(model);
 		default:
-			return _kosmoskatten$cui$MmePanel$viewMmePanel(model.mmeModel);
+			return _kosmoskatten$cui$Mme_Panel$viewMmePanel(model.mmeModel);
 	}
 };
 var _kosmoskatten$cui$CsimControlApp$equipmentSelectorParams = function (eq) {
@@ -8406,7 +8406,7 @@ var _kosmoskatten$cui$CsimControlApp$viewEquipmentSelectors = function (model) {
 				A2(
 				_kosmoskatten$cui$CsimControlApp$viewEquipmentSelector,
 				_kosmoskatten$cui$Types$MME,
-				_kosmoskatten$cui$MmePanel$numMmes(model.mmeModel))
+				_kosmoskatten$cui$Mme_Panel$numMmes(model.mmeModel))
 			]));
 };
 var _kosmoskatten$cui$CsimControlApp$view = function (model) {
@@ -8429,7 +8429,7 @@ var _kosmoskatten$cui$CsimControlApp$view = function (model) {
 };
 var _kosmoskatten$cui$CsimControlApp$init = {
 	ctor: '_Tuple2',
-	_0: {livePanel: _kosmoskatten$cui$Types$UE, mmeModel: _kosmoskatten$cui$MmePanel$initMme},
+	_0: {livePanel: _kosmoskatten$cui$Types$UE, mmeModel: _kosmoskatten$cui$Mme_Panel$initMme},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 var _kosmoskatten$cui$CsimControlApp$Model = F2(
