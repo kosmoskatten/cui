@@ -1,4 +1,4 @@
-module CharExtra exposing
+module Char.Extra exposing
   ( isAlpha
   , isSpace
   )

@@ -16,7 +16,7 @@ import List exposing (head, map)
 import Maybe exposing (withDefault)
 import String exposing (length, toList, left, any)
 
-import CharExtra exposing (isAlpha, isSpace)
+import Char.Extra exposing (isAlpha, isSpace)
 import Types exposing (..)
 
 -- Sub model for Mme.

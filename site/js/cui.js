@@ -7897,7 +7897,7 @@ var _elm_lang$html$Html_Events$Options = F2(
 		return {stopPropagation: a, preventDefault: b};
 	});
 
-var _kosmoskatten$cui$CharExtra$isSpace = function (c) {
+var _kosmoskatten$cui$Char_Extra$isSpace = function (c) {
 	return _elm_lang$core$Native_Utils.eq(
 		c,
 		_elm_lang$core$Native_Utils.chr(' ')) || (_elm_lang$core$Native_Utils.eq(
@@ -7908,7 +7908,7 @@ var _kosmoskatten$cui$CharExtra$isSpace = function (c) {
 		c,
 		_elm_lang$core$Native_Utils.chr('\t'))));
 };
-var _kosmoskatten$cui$CharExtra$isAlpha = function (c) {
+var _kosmoskatten$cui$Char_Extra$isAlpha = function (c) {
 	var c$ = _elm_lang$core$Char$toLower(c);
 	return (_elm_lang$core$Native_Utils.cmp(
 		c$,
@@ -7940,7 +7940,7 @@ var _kosmoskatten$cui$MmePanel$firstChar = function (_p0) {
 var _kosmoskatten$cui$MmePanel$isFirstCharAlpha = function (str) {
 	var _p1 = _kosmoskatten$cui$MmePanel$firstChar(str);
 	if (_p1.ctor === 'Just') {
-		return _kosmoskatten$cui$CharExtra$isAlpha(_p1._0);
+		return _kosmoskatten$cui$Char_Extra$isAlpha(_p1._0);
 	} else {
 		return false;
 	}
@@ -7949,7 +7949,7 @@ var _kosmoskatten$cui$MmePanel$shallNewMmeSubmitBeDisabled = function (newMme) {
 	return (_elm_lang$core$Native_Utils.cmp(
 		_elm_lang$core$String$length(newMme),
 		1) < 0) || (_elm_lang$core$Basics$not(
-		_kosmoskatten$cui$MmePanel$isFirstCharAlpha(newMme)) || A2(_elm_lang$core$String$any, _kosmoskatten$cui$CharExtra$isSpace, newMme));
+		_kosmoskatten$cui$MmePanel$isFirstCharAlpha(newMme)) || A2(_elm_lang$core$String$any, _kosmoskatten$cui$Char_Extra$isSpace, newMme));
 };
 var _kosmoskatten$cui$MmePanel$submitNewMmeForm = F2(
 	function (model, newName) {
