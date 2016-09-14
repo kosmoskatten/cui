@@ -6,7 +6,7 @@ module Mme.Panel exposing
   , openNewMmeForm
   , cancelNewMmeForm
   , onInputNewMmeName
-  , submitNewMmeForm
+  , newMmeFormSubmitted
   )
 
 {-| Viewing of, and handling the model of, the Mme control panel. -}
@@ -114,12 +114,10 @@ onInputNewMmeName model newName =
   {model | newMmeName = newName}
 
 -- Kind of dummy right now.
-submitNewMmeForm : MmeModel -> String -> MmeModel
-submitNewMmeForm model newName =
-  let mme = {name = newName, address = "10.10.10.2"}
-  in {model | newMmeFormOpen = False
-            , newMmeName = ""
-            , mmes = mme :: model.mmes}
+newMmeFormSubmitted : MmeModel -> MmeModel
+newMmeFormSubmitted model =
+  {model | newMmeFormOpen = False
+         , newMmeName = ""}
 
 shallNewMmeSubmitBeDisabled : String -> Bool
 shallNewMmeSubmitBeDisabled newMme =

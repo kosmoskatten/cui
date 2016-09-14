@@ -16,6 +16,7 @@ import Html.Events as E
 import Types exposing (..)
 
 import Mme.Panel exposing (..)
+import Mme.Rest exposing (createNewMme)
 
 -- Main model.
 type alias Model =
@@ -111,7 +112,13 @@ update msg model =
       ({model | mmeModel = onInputNewMmeName model.mmeModel newName}, Cmd.none)
 
     SubmitNewMmeForm newName  ->
-      ({model | mmeModel = submitNewMmeForm model.mmeModel newName}, Cmd.none)
+      ({model | mmeModel = newMmeFormSubmitted model.mmeModel}, createNewMme newName)
+
+    NewMmeCreated _           ->
+      (model, Cmd.none)
+
+    RestOpFailed _            ->
+      (model, Cmd.none)
 
 subscriptions : Model -> Sub Msg
 subscriptions model = Sub.none
