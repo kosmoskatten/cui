@@ -12,6 +12,8 @@ module CsimControlApp exposing
 import Html exposing (..)
 import Html.Attributes as A
 import Html.Events as E
+import Http exposing (Error (..))
+import Unicode as Uni
 
 import Types exposing (..)
 
@@ -21,11 +23,12 @@ import Mme.Rest exposing (createNewMme)
 -- Main model.
 type alias Model =
   { livePanel : Equipment
+  , errorMessage : Maybe String
   , mmeModel  : MmeModel
   }
 
 init : (Model, Cmd Msg)
-init = ({livePanel = UE, mmeModel = initMme}, Cmd.none)
+init = ({livePanel = UE, errorMessage = Nothing, mmeModel = initMme}, Cmd.none)
 
 -- Main view.
 view : Model -> Html Msg
@@ -34,6 +37,7 @@ view model =
       , A.style [("padding-top", "20px")]
       ]
     [ viewEquipmentSelectors model
+    , viewErrorMessage model
     , viewEquipmentPanel model
     ]
 
@@ -73,6 +77,21 @@ equipmentSelectorParams eq =
     UE  -> ("w3-blue", "phone_iphone", "UEs")
     ENB -> ("w3-teal", "router", "ENBs")
     MME -> ("w3-blue-grey", "gamepad", "MMEs")
+
+viewErrorMessage : Model -> Html Msg
+viewErrorMessage model =
+  case model.errorMessage of
+    Just err ->
+      div [ A.class "w3-container" ]
+        [ div [ A.class "w3-panel w3-red" ]
+            [ span [ A.class "w3-closebtn", E.onClick CloseErrorMsg ]
+                [ Uni.text' "&#10005;" ]
+            , h4 [] [ text "REST API Error" ]
+            , p [] [ text err ]
+            ]
+        ]
+
+    Nothing  -> div [] []
 
 viewEquipmentPanel : Model -> Html Msg
 viewEquipmentPanel model =
@@ -114,11 +133,22 @@ update msg model =
     SubmitNewMmeForm newName  ->
       ({model | mmeModel = newMmeFormSubmitted model.mmeModel}, createNewMme newName)
 
-    NewMmeCreated _           ->
-      (model, Cmd.none)
+    NewMmeCreated newMme      ->
+      ({model | mmeModel = newMmeCreated model.mmeModel newMme}, Cmd.none)
 
-    RestOpFailed _            ->
-      (model, Cmd.none)
+    RestOpFailed error        ->
+      ({model | errorMessage = Just <| expandError error}, Cmd.none)
+
+    CloseErrorMsg             ->
+      ({model | errorMessage = Nothing}, Cmd.none)
 
 subscriptions : Model -> Sub Msg
 subscriptions model = Sub.none
+
+expandError : Error -> String
+expandError error =
+  case error of
+    Timeout                -> "Timeout"
+    NetworkError           -> "Network Error"
+    UnexpectedPayload err  -> "Unexpected Payload: " ++ err
+    BadResponse status err -> "Response (" ++ toString status ++ "): " ++ err

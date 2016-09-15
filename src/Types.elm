@@ -8,6 +8,7 @@ module Types exposing
 
 {-| Generic types, shared between the modules -}
 
+import Array exposing (Array)
 import Http exposing (Error)
 import Json.Decode exposing (..)
 
@@ -22,12 +23,13 @@ type Msg
   | CancelNewMmeForm
   | OnInputNewMmeName String
   | SubmitNewMmeForm String
-  | NewMmeCreated UrlRef
+  | NewMmeCreated Mme
   | RestOpFailed Error
+  | CloseErrorMsg
 
 type alias Mme =
   { name : String
-  , address : String
+  , addresses : Array String
   }
 
 type alias UrlRef =

@@ -7,10 +7,12 @@ module Mme.Panel exposing
   , cancelNewMmeForm
   , onInputNewMmeName
   , newMmeFormSubmitted
+  , newMmeCreated
   )
 
 {-| Viewing of, and handling the model of, the Mme control panel. -}
 
+import Array exposing (get)
 import Char.Extra exposing (isAlpha, isSpace)
 import Html exposing (..)
 import Html.Attributes as A
@@ -95,7 +97,7 @@ viewMmeListItem : Mme -> Html Msg
 viewMmeListItem mme =
   tr []
     [ td [] [ text mme.name ]
-    , td [] [ text mme.address ]
+    , td [] [ text <| withDefault "-" (get 0 mme.addresses) ]
     ]
 
 -- Update event callbacks.
@@ -113,11 +115,14 @@ onInputNewMmeName : MmeModel -> String -> MmeModel
 onInputNewMmeName model newName =
   {model | newMmeName = newName}
 
--- Kind of dummy right now.
 newMmeFormSubmitted : MmeModel -> MmeModel
 newMmeFormSubmitted model =
   {model | newMmeFormOpen = False
          , newMmeName = ""}
+
+newMmeCreated : MmeModel -> Mme -> MmeModel
+newMmeCreated model newMme =
+  {model | mmes = model.mmes ++ [newMme]}
 
 shallNewMmeSubmitBeDisabled : String -> Bool
 shallNewMmeSubmitBeDisabled newMme =
