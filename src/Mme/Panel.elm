@@ -60,6 +60,7 @@ addNewMme =
       [ div [ A.class "w3-left" ]
           [ i [ A.class "material-icons w3-padding-tiny"
           , A.style [("cursor", "pointer")]
+          , A.title "Open the form to create a new MME"
           , E.onClick OpenNewMmeForm
           ] [ text "add"]
       ]
@@ -106,6 +107,13 @@ viewMmeListItem mme =
   tr []
     [ td [] [ text mme.name ]
     , td [] [ text <| withDefault "-" (get 0 mme.addresses) ]
+    , td []
+        [ i [ A.class "material-icons"
+            , A.style [("cursor", "pointer")]
+            , A.title <| "Delete " ++ mme.name
+            ]
+            [ text "delete" ]
+        ]
     ]
 
 -- Event callbacks from the main update function.

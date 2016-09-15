@@ -9175,6 +9175,30 @@ var _kosmoskatten$cui$Mme_Panel$viewMmeListItem = function (mme) {
 							_elm_lang$core$Maybe$withDefault,
 							'-',
 							A2(_elm_lang$core$Array$get, 0, mme.addresses)))
+					])),
+				A2(
+				_elm_lang$html$Html$td,
+				_elm_lang$core$Native_List.fromArray(
+					[]),
+				_elm_lang$core$Native_List.fromArray(
+					[
+						A2(
+						_elm_lang$html$Html$i,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('material-icons'),
+								_elm_lang$html$Html_Attributes$style(
+								_elm_lang$core$Native_List.fromArray(
+									[
+										{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
+									])),
+								_elm_lang$html$Html_Attributes$title(
+								A2(_elm_lang$core$Basics_ops['++'], 'Delete ', mme.name))
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('delete')
+							]))
 					]))
 			]));
 };
@@ -9318,6 +9342,7 @@ var _kosmoskatten$cui$Mme_Panel$addNewMme = A2(
 								[
 									{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
 								])),
+							_elm_lang$html$Html_Attributes$title('Open the form to create a new MME'),
 							_elm_lang$html$Html_Events$onClick(_kosmoskatten$cui$Types$OpenNewMmeForm)
 						]),
 					_elm_lang$core$Native_List.fromArray(
@@ -9663,6 +9688,8 @@ var _kosmoskatten$cui$CsimControlApp$viewEquipmentSelector = F2(
 						[
 							{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
 						])),
+					_elm_lang$html$Html_Attributes$title(
+					A2(_elm_lang$core$Basics_ops['++'], 'Switch to panel for ', label)),
 					_elm_lang$html$Html_Events$onClick(
 					_kosmoskatten$cui$Types$SetLivePanel(eq))
 				]),
@@ -9712,7 +9739,10 @@ var _kosmoskatten$cui$CsimControlApp$viewEquipmentSelector = F2(
 									A2(
 									_elm_lang$html$Html$h3,
 									_elm_lang$core$Native_List.fromArray(
-										[]),
+										[
+											_elm_lang$html$Html_Attributes$title(
+											A2(_elm_lang$core$Basics_ops['++'], 'The number of ', label))
+										]),
 									_elm_lang$core$Native_List.fromArray(
 										[
 											_elm_lang$html$Html$text(countStr)

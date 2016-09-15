@@ -56,6 +56,7 @@ viewEquipmentSelector eq count =
   in
     div [ A.class "w3-third"
         , A.style [("cursor", "pointer")]
+        , A.title <| "Switch to panel for " ++ label
         , E.onClick (SetLivePanel eq)
         ]
       [ div [ A.class ("w3-container w3-padding-16 " ++ color) ]
@@ -64,7 +65,8 @@ viewEquipmentSelector eq count =
                   [ text icon ]
               ]
           , div [ A.class "w3-right" ]
-              [ h3 [] [ text countStr ]
+              [ h3 [ A.title <| "The number of " ++ label ] 
+                [ text countStr ]
               ]
           , div [ A.class "w3-clear" ] []
           , h4 [] [ text label ]
