@@ -9064,9 +9064,9 @@ var _kosmoskatten$cui$Char_Extra$isAlpha = function (c) {
 		_elm_lang$core$Native_Utils.chr('z')) < 1);
 };
 
-var _kosmoskatten$cui$Types$Mme = F2(
-	function (a, b) {
-		return {name: a, addresses: b};
+var _kosmoskatten$cui$Types$Mme = F3(
+	function (a, b, c) {
+		return {name: a, url: b, addresses: c};
 	});
 var _kosmoskatten$cui$Types$UrlRef = function (a) {
 	return {url: a};
@@ -9369,33 +9369,45 @@ var _kosmoskatten$cui$Mme_Rest$nameToObj = function (name) {
 				}
 				])));
 };
-var _kosmoskatten$cui$Mme_Rest$restFetchMmeIps = function (url) {
-	var endPoint = A2(_elm_lang$core$Basics_ops['++'], url.url, '/ip_config');
+var _kosmoskatten$cui$Mme_Rest$fetchMmeIpConfig = function (url) {
 	return A2(
 		_evancz$elm_http$Http$get,
 		_elm_lang$core$Json_Decode$array(_elm_lang$core$Json_Decode$string),
-		endPoint);
+		A2(_elm_lang$core$Basics_ops['++'], url, '/ip_config'));
 };
-var _kosmoskatten$cui$Mme_Rest$restCreateNewMme = function (newMme) {
-	return A3(
-		_evancz$elm_http$Http$post,
-		_kosmoskatten$cui$Types$urlRef,
-		'/api/0.1/mme',
-		_evancz$elm_http$Http$string(
-			_kosmoskatten$cui$Mme_Rest$nameToObj(newMme)));
+var _kosmoskatten$cui$Mme_Rest$createMme = function (name) {
+	return A2(
+		_elm_lang$core$Task$andThen,
+		A3(
+			_evancz$elm_http$Http$post,
+			_kosmoskatten$cui$Types$urlRef,
+			'/api/0.1/mme',
+			_evancz$elm_http$Http$string(
+				_kosmoskatten$cui$Mme_Rest$nameToObj(name))),
+		function (ref) {
+			return _elm_lang$core$Task$succeed(ref.url);
+		});
 };
-var _kosmoskatten$cui$Mme_Rest$createNewMme = function (newMme) {
+var _kosmoskatten$cui$Mme_Rest$newMmeTask = function (name) {
+	return A2(
+		_elm_lang$core$Task$andThen,
+		_kosmoskatten$cui$Mme_Rest$createMme(name),
+		function (url) {
+			return A2(
+				_elm_lang$core$Task$andThen,
+				_kosmoskatten$cui$Mme_Rest$fetchMmeIpConfig(url),
+				function (xs) {
+					return _elm_lang$core$Task$succeed(
+						{name: name, url: url, addresses: xs});
+				});
+		});
+};
+var _kosmoskatten$cui$Mme_Rest$createNewMme = function (name) {
 	return A3(
 		_elm_lang$core$Task$perform,
 		_kosmoskatten$cui$Types$RestOpFailed,
-		function (xs) {
-			return _kosmoskatten$cui$Types$NewMmeCreated(
-				{name: newMme, addresses: xs});
-		},
-		A2(
-			_elm_lang$core$Task$andThen,
-			_kosmoskatten$cui$Mme_Rest$restCreateNewMme(newMme),
-			_kosmoskatten$cui$Mme_Rest$restFetchMmeIps));
+		_kosmoskatten$cui$Types$NewMmeCreated,
+		_kosmoskatten$cui$Mme_Rest$newMmeTask(name));
 };
 
 var _kosmoskatten$cui$CsimControlApp$expandError = function (error) {

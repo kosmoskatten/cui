@@ -28,7 +28,8 @@ type Msg
   | CloseErrorMsg
 
 type alias Mme =
-  { name : String
+  { name      : String
+  , url       : String
   , addresses : Array String
   }
 

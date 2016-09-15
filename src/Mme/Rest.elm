@@ -12,20 +12,28 @@ import Task exposing (..)
 
 import Types exposing (..)
 
+{-| Create a new Mme with the given name. -}
 createNewMme : String -> Cmd Msg
-createNewMme newMme =
-  Task.perform RestOpFailed
-               (\xs -> NewMmeCreated {name = newMme, addresses = xs})
-               <| restCreateNewMme newMme `andThen` restFetchMmeIps
+createNewMme name =
+  Task.perform RestOpFailed NewMmeCreated <| newMmeTask name
 
-restCreateNewMme : String -> Task Http.Error UrlRef
-restCreateNewMme newMme =
-  Http.post urlRef "/api/0.1/mme" <| Http.string (nameToObj newMme)
+newMmeTask : String -> Task Http.Error Mme
+newMmeTask name =
+  createMme name `andThen`
+    (\url -> fetchMmeIpConfig url
+      `andThen` (\xs -> succeed { name      = name
+                                , url       = url
+                                , addresses = xs
+                                }))
 
-restFetchMmeIps : UrlRef -> Task Http.Error (Array String)
-restFetchMmeIps url =
-  let endPoint = url.url ++ "/ip_config"
-  in Http.get (Dec.array Dec.string) endPoint
+createMme : String -> Task Http.Error String
+createMme name =
+  (Http.post urlRef "/api/0.1/mme" <| Http.string (nameToObj name))
+      `andThen` (\ref -> succeed <| ref.url)
+
+fetchMmeIpConfig : String -> Task Http.Error (Array String)
+fetchMmeIpConfig url =
+  Http.get (Dec.array Dec.string) <| url ++ "/ip_config"
 
 nameToObj : String -> String
 nameToObj name =
