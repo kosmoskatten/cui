@@ -23,20 +23,22 @@ import String exposing (length, toList, left, any)
 
 import Types exposing (..)
 
--- Sub model for Mme.
+{-| Model for the Mme panel. -}
 type alias MmeModel =
   { newMmeFormOpen : Bool -- Flag to tell if the new mme form is open.
-  , newMmeName : String -- The value of the new mme form's input field.
-  , mmes : List Mme
+  , newMmeName     : String -- The value of the new mme form's input field.
+  , mmes           : List Mme -- The set of Mmes attached to model.
   }
 
+{-| Initialize the Mme model. -}
 initMme : MmeModel
 initMme =
   { newMmeFormOpen = False
-  , newMmeName = ""
-  , mmes = []
+  , newMmeName     = ""
+  , mmes           = []
   }
 
+{-| View function for the Mme. -}
 viewMmePanel : MmeModel -> Html Msg
 viewMmePanel model =
   div [ A.class "w3-container" ]
@@ -47,9 +49,11 @@ viewMmePanel model =
     , viewMmeList model
     ]
 
+{-| Tell the number of Mmes attached to the model. -}
 numMmes : MmeModel -> Int
 numMmes model = List.length model.mmes
 
+{-| Widget to give the user the action to add a new Mme. -}
 addNewMme : Html Msg
 addNewMme =
   div [ A.class "w3-blue-grey" ]
@@ -62,12 +66,13 @@ addNewMme =
       , h5 [] [ text "Add new MME" ]
       ]
 
+{-| Widget to fill in the data for the Mme to be created. -}
 newMmeForm : MmeModel -> Html Msg
 newMmeForm model =
   div []
     [ div [ A.class "w3-container w3-blue-grey" ]
         [ h4 [] [ text "Add new MME"] ]
-    , form [ A.class "w3-container", A.style [("padding-bottom", "20px")] ]
+    , div [ A.class "w3-container", A.style [("padding-bottom", "20px")] ]
         [ p [] []
         , label [] [ text "New MME Name" ]
         , input [ A.class "w3-input w3-light-grey"
@@ -77,17 +82,20 @@ newMmeForm model =
                 , E.onInput OnInputNewMmeName
                 ] []
         ]
-    , button [ A.class "w3-btn w3-green"
-             , A.disabled (shallNewMmeSubmitBeDisabled model.newMmeName)
-             , E.onClick (SubmitNewMmeForm model.newMmeName)
-             ]
-             [ text "Submit" ]
-    , button [ A.class "w3-btn w3-red"
-             , E.onClick CancelNewMmeForm
-             ]
-             [ text "Cancel" ]
+    , div [ A.class "w3-container", A.style [("padding-bottom", "10px")]]
+        [ button [ A.class "w3-btn w3-green"
+                 , A.disabled (shallNewMmeSubmitBeDisabled model.newMmeName)
+                 , E.onClick (SubmitNewMmeForm model.newMmeName)
+                 ]
+                 [ text "Submit" ]
+        , button [ A.class "w3-btn w3-red"
+                 , E.onClick CancelNewMmeForm
+                 ]
+                 [ text "Cancel" ]
+        ]
     ]
 
+{-| View the list of attached Mmes. -}
 viewMmeList : MmeModel -> Html Msg
 viewMmeList model =
   table [ A.class "w3-table-all" ]
@@ -100,30 +108,37 @@ viewMmeListItem mme =
     , td [] [ text <| withDefault "-" (get 0 mme.addresses) ]
     ]
 
--- Update event callbacks.
+-- Event callbacks from the main update function.
+
+{-| Request to open the input form for creating a new Mme. -}
 openNewMmeForm : MmeModel -> MmeModel
 openNewMmeForm model =
   {model | newMmeFormOpen = True}
 
+{-| Request to cancel the input form. -}
 cancelNewMmeForm : MmeModel -> MmeModel
 cancelNewMmeForm model =
   {model | newMmeFormOpen = False
          , newMmeName = ""
   }
 
+{-| The user have entered text into the input field for the Mme's name. -}
 onInputNewMmeName : MmeModel -> String -> MmeModel
 onInputNewMmeName model newName =
   {model | newMmeName = newName}
 
+{-| The user have pressed "Submit" for creating a new Mme. -}
 newMmeFormSubmitted : MmeModel -> MmeModel
 newMmeFormSubmitted model =
   {model | newMmeFormOpen = False
          , newMmeName = ""}
 
+{-| Response from the API, the Mme is created. -}
 newMmeCreated : MmeModel -> Mme -> MmeModel
 newMmeCreated model newMme =
   {model | mmes = model.mmes ++ [newMme]}
 
+{-| Input data validator, to tell if "Submit" shall be enabled. -}
 shallNewMmeSubmitBeDisabled : String -> Bool
 shallNewMmeSubmitBeDisabled newMme =
     length newMme < 1 || not (isFirstCharAlpha newMme) || any isSpace newMme

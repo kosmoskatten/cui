@@ -9212,7 +9212,7 @@ var _kosmoskatten$cui$Mme_Panel$newMmeForm = function (model) {
 							]))
 					])),
 				A2(
-				_elm_lang$html$Html$form,
+				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
 					[
 						_elm_lang$html$Html_Attributes$class('w3-container'),
@@ -9252,29 +9252,43 @@ var _kosmoskatten$cui$Mme_Panel$newMmeForm = function (model) {
 							[]))
 					])),
 				A2(
-				_elm_lang$html$Html$button,
+				_elm_lang$html$Html$div,
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html_Attributes$class('w3-btn w3-green'),
-						_elm_lang$html$Html_Attributes$disabled(
-						_kosmoskatten$cui$Mme_Panel$shallNewMmeSubmitBeDisabled(model.newMmeName)),
-						_elm_lang$html$Html_Events$onClick(
-						_kosmoskatten$cui$Types$SubmitNewMmeForm(model.newMmeName))
+						_elm_lang$html$Html_Attributes$class('w3-container'),
+						_elm_lang$html$Html_Attributes$style(
+						_elm_lang$core$Native_List.fromArray(
+							[
+								{ctor: '_Tuple2', _0: 'padding-bottom', _1: '10px'}
+							]))
 					]),
 				_elm_lang$core$Native_List.fromArray(
 					[
-						_elm_lang$html$Html$text('Submit')
-					])),
-				A2(
-				_elm_lang$html$Html$button,
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html_Attributes$class('w3-btn w3-red'),
-						_elm_lang$html$Html_Events$onClick(_kosmoskatten$cui$Types$CancelNewMmeForm)
-					]),
-				_elm_lang$core$Native_List.fromArray(
-					[
-						_elm_lang$html$Html$text('Cancel')
+						A2(
+						_elm_lang$html$Html$button,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('w3-btn w3-green'),
+								_elm_lang$html$Html_Attributes$disabled(
+								_kosmoskatten$cui$Mme_Panel$shallNewMmeSubmitBeDisabled(model.newMmeName)),
+								_elm_lang$html$Html_Events$onClick(
+								_kosmoskatten$cui$Types$SubmitNewMmeForm(model.newMmeName))
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Submit')
+							])),
+						A2(
+						_elm_lang$html$Html$button,
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html_Attributes$class('w3-btn w3-red'),
+								_elm_lang$html$Html_Events$onClick(_kosmoskatten$cui$Types$CancelNewMmeForm)
+							]),
+						_elm_lang$core$Native_List.fromArray(
+							[
+								_elm_lang$html$Html$text('Cancel')
+							]))
 					]))
 			]));
 };
