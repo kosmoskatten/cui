@@ -65,7 +65,7 @@ viewEquipmentSelector eq count =
                   [ text icon ]
               ]
           , div [ A.class "w3-right" ]
-              [ h3 [ A.title <| "The number of " ++ label ] 
+              [ h3 [ A.title <| "The number of " ++ label ]
                 [ text countStr ]
               ]
           , div [ A.class "w3-clear" ] []
@@ -135,8 +135,11 @@ update msg model =
     SubmitNewMmeForm newName  ->
       ({model | mmeModel = newMmeFormSubmitted model.mmeModel}, createNewMme newName)
 
-    NewMmeCreated newMme      ->
-      ({model | mmeModel = newMmeCreated model.mmeModel newMme}, Cmd.none)
+    NewMmeCreated mme         ->
+      ({model | mmeModel = newMmeCreated model.mmeModel mme}, Cmd.none)
+
+    DeleteMme mme             ->
+      (model, Cmd.none)
 
     RestOpFailed error        ->
       ({model | errorMessage = Just <| expandError error}, Cmd.none)

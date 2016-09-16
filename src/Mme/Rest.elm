@@ -6,6 +6,7 @@ module Mme.Rest exposing
 
 import Array exposing (Array)
 import Http as Http
+import Http.Extra as Http
 import Json.Decode as Dec
 import Json.Encode as Enc
 import Task exposing (..)

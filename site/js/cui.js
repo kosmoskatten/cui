@@ -9082,6 +9082,9 @@ var _kosmoskatten$cui$Types$CloseErrorMsg = {ctor: 'CloseErrorMsg'};
 var _kosmoskatten$cui$Types$RestOpFailed = function (a) {
 	return {ctor: 'RestOpFailed', _0: a};
 };
+var _kosmoskatten$cui$Types$DeleteMme = function (a) {
+	return {ctor: 'DeleteMme', _0: a};
+};
 var _kosmoskatten$cui$Types$NewMmeCreated = function (a) {
 	return {ctor: 'NewMmeCreated', _0: a};
 };
@@ -9193,7 +9196,9 @@ var _kosmoskatten$cui$Mme_Panel$viewMmeListItem = function (mme) {
 										{ctor: '_Tuple2', _0: 'cursor', _1: 'pointer'}
 									])),
 								_elm_lang$html$Html_Attributes$title(
-								A2(_elm_lang$core$Basics_ops['++'], 'Delete ', mme.name))
+								A2(_elm_lang$core$Basics_ops['++'], 'Delete ', mme.name)),
+								_elm_lang$html$Html_Events$onClick(
+								_kosmoskatten$cui$Types$DeleteMme(mme))
 							]),
 						_elm_lang$core$Native_List.fromArray(
 							[
@@ -9394,6 +9399,15 @@ var _kosmoskatten$cui$Mme_Panel$MmeModel = F3(
 		return {newMmeFormOpen: a, newMmeName: b, mmes: c};
 	});
 
+var _kosmoskatten$cui$Http_Extra$promoteError = function (error) {
+	var _p0 = error;
+	if (_p0.ctor === 'RawTimeout') {
+		return _evancz$elm_http$Http$Timeout;
+	} else {
+		return _evancz$elm_http$Http$NetworkError;
+	}
+};
+
 var _kosmoskatten$cui$Mme_Rest$nameToObj = function (name) {
 	return A2(
 		_elm_lang$core$Json_Encode$encode,
@@ -9533,6 +9547,8 @@ var _kosmoskatten$cui$CsimControlApp$update = F2(
 						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			case 'DeleteMme':
+				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
 			case 'RestOpFailed':
 				return {
 					ctor: '_Tuple2',

@@ -111,6 +111,7 @@ viewMmeListItem mme =
         [ i [ A.class "material-icons"
             , A.style [("cursor", "pointer")]
             , A.title <| "Delete " ++ mme.name
+            , E.onClick (DeleteMme mme)
             ]
             [ text "delete" ]
         ]
