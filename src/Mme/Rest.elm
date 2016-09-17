@@ -13,6 +13,9 @@ import Task exposing (..)
 
 import Types exposing (..)
 
+{-| Command for creating a Mme, fetch its addresses and finally
+    return a Mme record.
+-}
 createMme : String -> Cmd Msg
 createMme name =
   Task.perform RestOpFailed NewMmeCreated
@@ -25,11 +28,13 @@ createMme name =
          )
        )
 
+{-| Command for deleting a Mme. -}
 deleteMme : Mme -> Cmd Msg
 deleteMme mme =
   Task.perform RestOpFailed MmeDeleted
     <| deleteMmeTask mme `andThen` (\_ -> succeed mme)
 
+{-| Task that creates one Mme and returns the Mme's url ref. -}
 createMmeTask : String -> Task (HttpBuilder.Error String)
                                (HttpBuilder.Response UrlRef)
 createMmeTask name =
@@ -39,6 +44,7 @@ createMmeTask name =
                    , ("Accept", "application/json")]
     |> HttpBuilder.send (jsonReader urlRef) stringReader
 
+{-| Task that take a Mme url ref and fetches all address for the Mme. -}
 fetchMmeIpConfigTask : UrlRef -> Task (HttpBuilder.Error String)
                                       (HttpBuilder.Response (Array String))
 fetchMmeIpConfigTask urlRef =
@@ -46,8 +52,9 @@ fetchMmeIpConfigTask urlRef =
     |> withHeader "Accept" "application/json"
     |> HttpBuilder.send (jsonReader <| Dec.array Dec.string) stringReader
 
+{-| Task that deletes one Mme. -}
 deleteMmeTask : Mme -> Task (HttpBuilder.Error String)
-                         (HttpBuilder.Response ())
+                            (HttpBuilder.Response ())
 deleteMmeTask mme =
   HttpBuilder.delete mme.url
     |> HttpBuilder.send unitReader stringReader
