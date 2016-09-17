@@ -25,6 +25,7 @@ type Msg
   | SubmitNewMmeForm String
   | NewMmeCreated Mme
   | DeleteMme Mme
+  | MmeDeleted Mme
   | RestOpFailed Error
   | CloseErrorMsg
 

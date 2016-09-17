@@ -1,5 +1,6 @@
 module Mme.Rest exposing
   ( createNewMme
+  , deleteMme
   )
 
 {-| Rest API routines for the Mme. -}
@@ -17,6 +18,12 @@ import Types exposing (..)
 createNewMme : String -> Cmd Msg
 createNewMme name =
   Task.perform RestOpFailed NewMmeCreated <| newMmeTask name
+
+{-| Delete the given Mme. -}
+deleteMme : Mme -> Cmd Msg
+deleteMme mme =
+  Task.perform RestOpFailed MmeDeleted <| Http.delete mme.url
+    `andThen` (\_ -> succeed mme)
 
 newMmeTask : String -> Task Http.Error Mme
 newMmeTask name =

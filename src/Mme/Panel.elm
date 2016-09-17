@@ -8,6 +8,7 @@ module Mme.Panel exposing
   , onInputNewMmeName
   , newMmeFormSubmitted
   , newMmeCreated
+  , mmeDeleted
   )
 
 {-| Viewing of, and handling the model of, the Mme control panel. -}
@@ -17,7 +18,7 @@ import Char.Extra exposing (isAlpha, isSpace)
 import Html exposing (..)
 import Html.Attributes as A
 import Html.Events as E
-import List exposing (head, map)
+import List exposing (head, filter, map)
 import Maybe exposing (withDefault)
 import String exposing (length, toList, left, any)
 
@@ -144,8 +145,13 @@ newMmeFormSubmitted model =
 
 {-| Response from the API, the Mme is created. -}
 newMmeCreated : MmeModel -> Mme -> MmeModel
-newMmeCreated model newMme =
-  {model | mmes = model.mmes ++ [newMme]}
+newMmeCreated model mme =
+  {model | mmes = model.mmes ++ [mme]}
+
+{-| Response from the API, the Mme is deleted. -}
+mmeDeleted : MmeModel -> Mme -> MmeModel
+mmeDeleted model mme =
+  {model | mmes = filter (\x -> x.name /= mme.name) model.mmes}
 
 {-| Input data validator, to tell if "Submit" shall be enabled. -}
 shallNewMmeSubmitBeDisabled : String -> Bool

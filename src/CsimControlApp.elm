@@ -18,7 +18,7 @@ import Unicode as Uni
 import Types exposing (..)
 
 import Mme.Panel exposing (..)
-import Mme.Rest exposing (createNewMme)
+import Mme.Rest exposing (createNewMme, deleteMme)
 
 -- Main model.
 type alias Model =
@@ -139,7 +139,10 @@ update msg model =
       ({model | mmeModel = newMmeCreated model.mmeModel mme}, Cmd.none)
 
     DeleteMme mme             ->
-      (model, Cmd.none)
+      (model, deleteMme mme)
+
+    MmeDeleted mme            ->
+      ({model | mmeModel = mmeDeleted model.mmeModel mme}, Cmd.none)
 
     RestOpFailed error        ->
       ({model | errorMessage = Just <| expandError error}, Cmd.none)

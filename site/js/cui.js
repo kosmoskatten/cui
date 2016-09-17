@@ -9082,6 +9082,9 @@ var _kosmoskatten$cui$Types$CloseErrorMsg = {ctor: 'CloseErrorMsg'};
 var _kosmoskatten$cui$Types$RestOpFailed = function (a) {
 	return {ctor: 'RestOpFailed', _0: a};
 };
+var _kosmoskatten$cui$Types$MmeDeleted = function (a) {
+	return {ctor: 'MmeDeleted', _0: a};
+};
 var _kosmoskatten$cui$Types$DeleteMme = function (a) {
 	return {ctor: 'DeleteMme', _0: a};
 };
@@ -9119,8 +9122,21 @@ var _kosmoskatten$cui$Mme_Panel$shallNewMmeSubmitBeDisabled = function (newMme) 
 		1) < 0) || (_elm_lang$core$Basics$not(
 		_kosmoskatten$cui$Mme_Panel$isFirstCharAlpha(newMme)) || A2(_elm_lang$core$String$any, _kosmoskatten$cui$Char_Extra$isSpace, newMme));
 };
+var _kosmoskatten$cui$Mme_Panel$mmeDeleted = F2(
+	function (model, mme) {
+		return _elm_lang$core$Native_Utils.update(
+			model,
+			{
+				mmes: A2(
+					_elm_lang$core$List$filter,
+					function (x) {
+						return !_elm_lang$core$Native_Utils.eq(x.name, mme.name);
+					},
+					model.mmes)
+			});
+	});
 var _kosmoskatten$cui$Mme_Panel$newMmeCreated = F2(
-	function (model, newMme) {
+	function (model, mme) {
 		return _elm_lang$core$Native_Utils.update(
 			model,
 			{
@@ -9128,7 +9144,7 @@ var _kosmoskatten$cui$Mme_Panel$newMmeCreated = F2(
 					_elm_lang$core$Basics_ops['++'],
 					model.mmes,
 					_elm_lang$core$Native_List.fromArray(
-						[newMme]))
+						[mme]))
 			});
 	});
 var _kosmoskatten$cui$Mme_Panel$newMmeFormSubmitted = function (model) {
@@ -9407,6 +9423,27 @@ var _kosmoskatten$cui$Http_Extra$promoteError = function (error) {
 		return _evancz$elm_http$Http$NetworkError;
 	}
 };
+var _kosmoskatten$cui$Http_Extra$handleResponse = function (response) {
+	return ((_elm_lang$core$Native_Utils.cmp(response.status, 200) > -1) && (_elm_lang$core$Native_Utils.cmp(response.status, 300) < 0)) ? _elm_lang$core$Task$succeed(
+		{ctor: '_Tuple0'}) : _elm_lang$core$Task$fail(
+		A2(_evancz$elm_http$Http$BadResponse, response.status, response.statusText));
+};
+var _kosmoskatten$cui$Http_Extra$delete = function (url) {
+	var request = {
+		verb: 'DELETE',
+		headers: _elm_lang$core$Native_List.fromArray(
+			[]),
+		url: url,
+		body: _evancz$elm_http$Http$empty
+	};
+	return A2(
+		_elm_lang$core$Task$andThen,
+		A2(
+			_elm_lang$core$Task$mapError,
+			_kosmoskatten$cui$Http_Extra$promoteError,
+			A2(_evancz$elm_http$Http$send, _evancz$elm_http$Http$defaultSettings, request)),
+		_kosmoskatten$cui$Http_Extra$handleResponse);
+};
 
 var _kosmoskatten$cui$Mme_Rest$nameToObj = function (name) {
 	return A2(
@@ -9454,6 +9491,18 @@ var _kosmoskatten$cui$Mme_Rest$newMmeTask = function (name) {
 						{name: name, url: url, addresses: xs});
 				});
 		});
+};
+var _kosmoskatten$cui$Mme_Rest$deleteMme = function (mme) {
+	return A3(
+		_elm_lang$core$Task$perform,
+		_kosmoskatten$cui$Types$RestOpFailed,
+		_kosmoskatten$cui$Types$MmeDeleted,
+		A2(
+			_elm_lang$core$Task$andThen,
+			_kosmoskatten$cui$Http_Extra$delete(mme.url),
+			function (_p0) {
+				return _elm_lang$core$Task$succeed(mme);
+			}));
 };
 var _kosmoskatten$cui$Mme_Rest$createNewMme = function (name) {
 	return A3(
@@ -9548,7 +9597,21 @@ var _kosmoskatten$cui$CsimControlApp$update = F2(
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'DeleteMme':
-				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
+				return {
+					ctor: '_Tuple2',
+					_0: model,
+					_1: _kosmoskatten$cui$Mme_Rest$deleteMme(_p1._0)
+				};
+			case 'MmeDeleted':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							mmeModel: A2(_kosmoskatten$cui$Mme_Panel$mmeDeleted, model.mmeModel, _p1._0)
+						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
 			case 'RestOpFailed':
 				return {
 					ctor: '_Tuple2',
