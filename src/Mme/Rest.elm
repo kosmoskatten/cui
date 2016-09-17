@@ -1,48 +1,53 @@
 module Mme.Rest exposing
-  ( createNewMme
+  ( createMme
   , deleteMme
   )
 
 {-| Rest API routines for the Mme. -}
 
 import Array exposing (Array)
-import Http as Http
-import Http.Extra as Http
+import HttpBuilder exposing (..)
 import Json.Decode as Dec
 import Json.Encode as Enc
 import Task exposing (..)
 
 import Types exposing (..)
 
-{-| Create a new Mme with the given name. -}
-createNewMme : String -> Cmd Msg
-createNewMme name =
-  Task.perform RestOpFailed NewMmeCreated <| newMmeTask name
+createMme : String -> Cmd Msg
+createMme name =
+  Task.perform RestOpFailed NewMmeCreated
+    <| createMmeTask name `andThen` (\resp1 ->
+         fetchMmeIpConfigTask resp1.data `andThen` (\resp2 ->
+           succeed { name      = name
+                   , url       = resp1.data.url
+                   , addresses = resp2.data
+                   }
+         )
+       )
 
-{-| Delete the given Mme. -}
 deleteMme : Mme -> Cmd Msg
 deleteMme mme =
-  Task.perform RestOpFailed MmeDeleted <| Http.delete mme.url
-    `andThen` (\_ -> succeed mme)
+  Task.perform RestOpFailed MmeDeleted
+    <| deleteMmeTask mme `andThen` (\_ -> succeed mme)
 
-newMmeTask : String -> Task Http.Error Mme
-newMmeTask name =
-  createMme name `andThen`
-    (\url -> fetchMmeIpConfig url
-      `andThen` (\xs -> succeed { name      = name
-                                , url       = url
-                                , addresses = xs
-                                }))
+createMmeTask : String -> Task (HttpBuilder.Error String)
+                               (HttpBuilder.Response UrlRef)
+createMmeTask name =
+  HttpBuilder.post "/api/0.1/mme"
+    |> withJsonBody (Enc.object [("name", Enc.string name)])
+    |> withHeaders [ ("Content-Type", "application/json")
+                   , ("Accept", "application/json")]
+    |> HttpBuilder.send (jsonReader urlRef) stringReader
 
-createMme : String -> Task Http.Error String
-createMme name =
-  (Http.post urlRef "/api/0.1/mme" <| Http.string (nameToObj name))
-      `andThen` (\ref -> succeed <| ref.url)
+fetchMmeIpConfigTask : UrlRef -> Task (HttpBuilder.Error String)
+                                      (HttpBuilder.Response (Array String))
+fetchMmeIpConfigTask urlRef =
+  HttpBuilder.get (urlRef.url ++ "/ip_config")
+    |> withHeader "Accept" "application/json"
+    |> HttpBuilder.send (jsonReader <| Dec.array Dec.string) stringReader
 
-fetchMmeIpConfig : String -> Task Http.Error (Array String)
-fetchMmeIpConfig url =
-  Http.get (Dec.array Dec.string) <| url ++ "/ip_config"
-
-nameToObj : String -> String
-nameToObj name =
-  Enc.encode 4 (Enc.object [("name", Enc.string name)])
+deleteMmeTask : Mme -> Task (HttpBuilder.Error String)
+                         (HttpBuilder.Response ())
+deleteMmeTask mme =
+  HttpBuilder.delete mme.url
+    |> HttpBuilder.send unitReader stringReader

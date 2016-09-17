@@ -9,7 +9,7 @@ module Types exposing
 {-| Generic types, shared between the modules -}
 
 import Array exposing (Array)
-import Http exposing (Error)
+import HttpBuilder exposing (Error)
 import Json.Decode exposing (..)
 
 type Equipment
@@ -26,7 +26,7 @@ type Msg
   | NewMmeCreated Mme
   | DeleteMme Mme
   | MmeDeleted Mme
-  | RestOpFailed Error
+  | RestOpFailed (Error String)
   | CloseErrorMsg
 
 type alias Mme =

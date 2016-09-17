@@ -12,13 +12,13 @@ module CsimControlApp exposing
 import Html exposing (..)
 import Html.Attributes as A
 import Html.Events as E
-import Http exposing (Error (..))
+import HttpBuilder exposing (Error (..), Response)
 import Unicode as Uni
 
 import Types exposing (..)
 
 import Mme.Panel exposing (..)
-import Mme.Rest exposing (createNewMme, deleteMme)
+import Mme.Rest exposing (createMme, deleteMme)
 
 -- Main model.
 type alias Model =
@@ -129,11 +129,11 @@ update msg model =
     CancelNewMmeForm          ->
       ({model | mmeModel = cancelNewMmeForm model.mmeModel}, Cmd.none)
 
-    OnInputNewMmeName newName ->
-      ({model | mmeModel = onInputNewMmeName model.mmeModel newName}, Cmd.none)
+    OnInputNewMmeName name ->
+      ({model | mmeModel = onInputNewMmeName model.mmeModel name}, Cmd.none)
 
-    SubmitNewMmeForm newName  ->
-      ({model | mmeModel = newMmeFormSubmitted model.mmeModel}, createNewMme newName)
+    SubmitNewMmeForm name  ->
+      ({model | mmeModel = newMmeFormSubmitted model.mmeModel}, createMme name)
 
     NewMmeCreated mme         ->
       ({model | mmeModel = newMmeCreated model.mmeModel mme}, Cmd.none)
@@ -153,10 +153,11 @@ update msg model =
 subscriptions : Model -> Sub Msg
 subscriptions model = Sub.none
 
-expandError : Error -> String
+expandError : Error String -> String
 expandError error =
   case error of
     Timeout                -> "Timeout"
     NetworkError           -> "Network Error"
     UnexpectedPayload err  -> "Unexpected Payload: " ++ err
-    BadResponse status err -> "Response (" ++ toString status ++ "): " ++ err
+    BadResponse resp       ->
+      "Response (" ++ toString resp.status ++ "): " ++ resp.statusText
